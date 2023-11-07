@@ -6,6 +6,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     NgbModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
