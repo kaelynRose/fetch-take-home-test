@@ -6,16 +6,16 @@
     <mat-card-content>
         <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
-            <input type="text" matInput placeholder="John" [formControl]="name" required>
+            <input type="text" matInput placeholder="John" [formControl]="name" [(ngModel)]="userName" required>
             <mat-error *ngIf="name.invalid">{{ getNameErrorMessage() }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>E-mail Address</mat-label>
-            <input type="email" matInput placeholder="john@email.com" [formControl]="email" required>
+            <input type="email" matInput placeholder="john@email.com" [formControl]="email" [(ngModel)]="userEmail" required>
             <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
         </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-flat-button color="primary">LOGIN</button>
+        <button mat-flat-button color="primary" (click)="userLogin()">LOGIN</button>
     </mat-card-actions>
 </mat-card>
