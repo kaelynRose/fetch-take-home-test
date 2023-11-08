@@ -15,6 +15,7 @@ export class LoginFormComponent {
   userName: string = "";
   userEmail: string = "";
   baseURL: string = 'https://frontend-take-home-service.fetch.com';
+  showComponent: boolean = true;
 
   constructor(private http: HttpClient) {}
 
@@ -29,8 +30,7 @@ export class LoginFormComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  async userLogin() {
-    console.log(this.userName, this.userEmail);
+  userLogin() {
     let xhr = new XMLHttpRequest();
     let url = this.baseURL + '/auth/login';
     let body = {
@@ -50,6 +50,7 @@ export class LoginFormComponent {
     }
 
     xhr.send(JSON.stringify(body));
+    this.showComponent = false;
   }
 
 }
