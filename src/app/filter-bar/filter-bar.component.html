@@ -1,1 +1,4 @@
-<p>filter-bar works!</p>
+<p (click)="getDogBreeds()">filter-bar works!</p>
+<div>
+    <p *ngFor="let breed of breedList">{{ breed }}</p>
+</div>

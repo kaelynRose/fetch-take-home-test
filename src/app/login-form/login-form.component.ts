@@ -36,12 +36,14 @@ export class LoginFormComponent {
 
     xhr.open("post", url);
 
+    xhr.withCredentials = true;
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("credentials", "include");
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4) {
             console.log("Login Successful");
+            console.log(document.cookie);
         }
     }
 
