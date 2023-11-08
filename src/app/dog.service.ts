@@ -15,4 +15,10 @@ export class DogService {
     let data = this.http.get('https://frontend-take-home-service.fetch.com/dogs/search', {withCredentials: true});
     return data;
   }
+
+  getDogs(ids: string[]) {
+    let body: string[] = ids;
+    let data = this.http.post('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true});
+    return data;
+  }
 }

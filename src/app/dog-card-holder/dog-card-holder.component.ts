@@ -10,11 +10,15 @@ import { DogService } from '../dog.service';
 })
 export class DogCardHolderComponent {
 
-  searchIds = {};
+  searchIds: string[] = [];
+  dogList: Dog[] = [];
 
   constructor(private dogService:DogService) {}
 
   ngOnInit() {
-    this.dogService.getAllDogIds().subscribe((data: any) => {this.searchIds = data.resultIds; console.log(this.searchIds);})
+    this.dogService.getAllDogIds().subscribe((data: any) => {
+      this.searchIds = data.resultIds;
+      this.dogService.getDogs(this.searchIds).subscribe((data: any) => {this.dogList = data});
+    })
   }
 }
