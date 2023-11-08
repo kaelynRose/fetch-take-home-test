@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -14,6 +15,7 @@ export class LoginFormComponent {
   userEmail: string = "";
   showComponent: boolean = true;
 
+  constructor (private _router: Router) {}
 
   getNameErrorMessage = () => {
     return 'You must enter a value';
@@ -41,14 +43,13 @@ export class LoginFormComponent {
     xhr.setRequestHeader("credentials", "include");
 
     xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
             console.log("Login Successful");
-            console.log(document.cookie);
+            this._router.navigate(['home']);
         }
     }
 
     xhr.send(JSON.stringify(body));
-    this.showComponent = false;
   }
 
 }

@@ -45,6 +45,7 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     MatSelectModule,
     RouterModule.forRoot([
+      { path: '', redirectTo: '/login', pathMatch: 'full'},
       { path: 'login', component: LoginFormComponent },
       { path: 'home', component: HomeComponent }
     ])
