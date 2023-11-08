@@ -18,6 +18,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { MatSelectModule } from '@angular/material/select';
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { MatSelectModule } from '@angular/material/select';
     NavBarComponent,
     DogCardComponent,
     LoginFormComponent,
-    FilterBarComponent
+    FilterBarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    RouterModule.forRoot([
+      { path: 'login', component: LoginFormComponent },
+      { path: 'home', component: HomeComponent }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
