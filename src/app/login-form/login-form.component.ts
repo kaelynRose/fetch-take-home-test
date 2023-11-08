@@ -12,7 +12,6 @@ export class LoginFormComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   userName: string = "";
   userEmail: string = "";
-  baseURL: string = 'https://frontend-take-home-service.fetch.com';
   showComponent: boolean = true;
 
 
@@ -29,7 +28,7 @@ export class LoginFormComponent {
 
   userLogin = () => {
     let xhr = new XMLHttpRequest();
-    let url = this.baseURL + '/auth/login';
+    let url = 'https://frontend-take-home-service.fetch.com/auth/login';
     let body = {
         name : this.userName,
         email: this.userEmail
