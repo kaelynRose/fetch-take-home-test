@@ -17,7 +17,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
-
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -39,7 +39,8 @@ import { FilterBarComponent } from './filter-bar/filter-bar.component';
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

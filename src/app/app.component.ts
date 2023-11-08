@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title: string = 'Fetch Take Home Test';
-  showFilters: boolean = true;
+  loggedIn: boolean = false;
 
 }
