@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -17,20 +15,19 @@ export class LoginFormComponent {
   baseURL: string = 'https://frontend-take-home-service.fetch.com';
   showComponent: boolean = true;
 
-  constructor(private http: HttpClient) {}
 
-  getNameErrorMessage() {
+  getNameErrorMessage = () => {
     return 'You must enter a value';
   }
 
-  getEmailErrorMessage() {
+  getEmailErrorMessage = () => {
     if (this.email.hasError('required')) {
       return 'You must enter a value';
     }
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  userLogin() {
+  userLogin = () => {
     let xhr = new XMLHttpRequest();
     let url = this.baseURL + '/auth/login';
     let body = {
