@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DogCardHolderComponent } from './dog-card-holder/dog-card-holder.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { DogCardHolderComponent } from './dog-card-holder/dog-card-holder.compon
     MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatGridListModule,
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full'},
       { path: 'login', component: LoginFormComponent },
