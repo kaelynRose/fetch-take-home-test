@@ -16,6 +16,7 @@ import { DogCardComponent } from './dog-card/dog-card.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
 
 
 
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     NavBarComponent,
     DogCardComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    FilterBarComponent
   ],
   imports: [
     BrowserModule,
