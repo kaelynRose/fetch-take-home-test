@@ -20,6 +20,7 @@ import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { DogCardHolderComponent } from './dog-card-holder/dog-card-holder.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { HomeComponent } from './home/home.component';
     DogCardComponent,
     LoginFormComponent,
     FilterBarComponent,
-    HomeComponent
+    HomeComponent,
+    DogCardHolderComponent
   ],
   imports: [
     BrowserModule,
