@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-filter-bar',
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.css']
 })
-export class FilterBarComponent {
+export class FilterBarComponent implements OnInit{
   breedList = [];
   filterBreed: string = "";
+
+  ngOnInit(): void {
+    this.getDogBreeds();
+  }
 
   getDogBreeds = () => {
     let xhr = new XMLHttpRequest();

@@ -7,7 +7,7 @@
             <mat-label>Dog Breeds</mat-label>
             <mat-select [(value)]="filterBreed">
                 <mat-option>All Breeds</mat-option>
-                <mat-option *ngFor="let breed of breedList" value=`{{ breed }}`>{{ breed }}</mat-option>
+                <mat-option *ngFor="let breed of breedList" value="{{ breed }}">{{ breed }}</mat-option>
             </mat-select>
         </mat-form-field>
     </mat-card-content>
