@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -13,6 +14,8 @@ export class LoginFormComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   userName: string = "";
   userEmail: string = "";
+  baseURL: string = 'https://frontend-take-home-service.fetch.com';
+
   constructor(private http: HttpClient) {}
 
   getNameErrorMessage() {
@@ -26,8 +29,27 @@ export class LoginFormComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  userLogin() {
+  async userLogin() {
     console.log(this.userName, this.userEmail);
+    let xhr = new XMLHttpRequest();
+    let url = this.baseURL + '/auth/login';
+    let body = {
+        name : this.userName,
+        email: this.userEmail
+    };
+
+    xhr.open("post", url);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("credentials", "include");
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4) {
+            console.log("Login Successful");
+        }
+    }
+
+    xhr.send(JSON.stringify(body));
   }
 
 }
