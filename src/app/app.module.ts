@@ -22,6 +22,8 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DogCardHolderComponent } from './dog-card-holder/dog-card-holder.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -48,6 +50,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     ReactiveFormsModule,
     MatSelectModule,
     MatGridListModule,
+    MatCheckboxModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full'},
       { path: 'login', component: LoginFormComponent },

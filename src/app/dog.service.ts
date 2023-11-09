@@ -10,6 +10,10 @@ export class DogService {
 
   constructor(private http:HttpClient) { }
   
+  getDogBreeds() {
+    let data = this.http.get('https://frontend-take-home-service.fetch.com/dogs/breeds', {withCredentials: true});
+    return data;
+  }
 
   getAllDogIds() {
     let data = this.http.get('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true});

@@ -3,12 +3,14 @@
         <mat-card-title>Filters</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <mat-form-field>
-            <mat-label>Dog Breeds</mat-label>
-            <mat-select [(value)]="filterBreed">
-                <mat-option>All Breeds</mat-option>
-                <mat-option *ngFor="let breed of breedList" value="{{ breed }}">{{ breed }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <mat-card-subtitle>Dog Breeds</mat-card-subtitle>
+        <div id="breedContainer">
+             <div *ngFor="let breed of breedList">
+                <label>
+                    <mat-checkbox color="primary" [(ngModel)]="breed.checked"></mat-checkbox>
+                    {{ breed.name }}
+                </label>
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>

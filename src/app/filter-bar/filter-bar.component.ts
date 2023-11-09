@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { DogService } from '../dog.service';
+
+interface BreedCheckbox {
+  name: string;
+  checked: boolean;
+}
 
 @Component({
   selector: 'app-filter-bar',
@@ -6,29 +12,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./filter-bar.component.css']
 })
 export class FilterBarComponent implements OnInit{
-  breedList = [];
-  filterBreed: string = "";
+  breedList: BreedCheckbox[] = [];
+
+  constructor(private dogService:DogService) { }
 
   ngOnInit(): void {
-    this.getDogBreeds();
-  }
+    let dataList: string[] = [];
+    this.dogService.getDogBreeds().subscribe((data: any) => {
+      dataList = data;
+      this.breedList = dataList.map((x: string) => ({
+        name: x,
+        checked: false
+      }))
+    });
 
-  getDogBreeds = () => {
-    let xhr = new XMLHttpRequest();
-    let url: string = 'https://frontend-take-home-service.fetch.com/dogs/breeds'
-
-    xhr.open("get", url);
-
-    xhr.withCredentials = true;
-    xhr.setRequestHeader("credentials", "include");
-
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4) {
-            console.log("All records obtained");
-            this.breedList = JSON.parse(xhr.responseText);
-        }
-    }
-
-    xhr.send();
   }
 }
