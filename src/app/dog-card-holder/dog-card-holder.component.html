@@ -1,5 +1,5 @@
-<mat-grid-list cols="5">
-    <mat-grid-tile>
-        <app-dog-card></app-dog-card>
+<mat-grid-list cols="4" rowHeight="1:2" gutterSize="25px">
+    <mat-grid-tile *ngFor="let dog of dogList" >
+        <app-dog-card [dog]="dog"></app-dog-card>
     </mat-grid-tile>
 </mat-grid-list>
