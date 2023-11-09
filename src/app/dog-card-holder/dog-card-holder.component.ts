@@ -34,7 +34,7 @@ export class DogCardHolderComponent implements OnInit {
 
   handlePageEvent(e: PageEvent) {
     if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
-      this.dogService.getPageDogsIds(this.nextString).subscribe((data: any) => {
+      this.dogService.nextDogPage(this.nextString).subscribe((data: any) => {
         this.searchIds = data.resultIds;
         this.nextString = data.next;
         this.prevString = data.prev;
@@ -42,7 +42,7 @@ export class DogCardHolderComponent implements OnInit {
         this.dogService.getDogs(this.searchIds).subscribe((data: any) => {this.dogList = data});
       })
     } else if (e.previousPageIndex > e.pageIndex) {
-      this.dogService.getPageDogsIds(this.prevString).subscribe((data: any) => {
+      this.dogService.prevDogPage(this.prevString).subscribe((data: any) => {
         this.searchIds = data.resultIds;
         this.nextString = data.next;
         this.prevString = data.prev;
