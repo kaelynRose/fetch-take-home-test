@@ -32,7 +32,7 @@ export class DogCardHolderComponent {
 
   handlePageEvent(e: PageEvent) {
     if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
-      this.dogService.getNextDogsIds(this.nextString).subscribe((data: any) => {
+      this.dogService.getPageDogsIds(this.nextString).subscribe((data: any) => {
         this.searchIds = data.resultIds;
         this.nextString = data.next;
         this.prevString = data.prev;
@@ -40,7 +40,7 @@ export class DogCardHolderComponent {
         this.dogService.getDogs(this.searchIds).subscribe((data: any) => {this.dogList = data});
       })
     } else if (e.previousPageIndex > e.pageIndex) {
-      this.dogService.getNextDogsIds(this.prevString).subscribe((data: any) => {
+      this.dogService.getPageDogsIds(this.prevString).subscribe((data: any) => {
         this.searchIds = data.resultIds;
         this.nextString = data.next;
         this.prevString = data.prev;

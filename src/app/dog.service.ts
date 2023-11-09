@@ -16,8 +16,8 @@ export class DogService {
     return data;
   }
 
-  getNextDogsIds(nextParams: string) {
-    let data = this.http.get('https://frontend-take-home-service.fetch.com' + nextParams, {withCredentials: true});
+  getPageDogsIds(pageParam: string) {
+    let data = this.http.get('https://frontend-take-home-service.fetch.com' + pageParam, {withCredentials: true});
     return data;
   }
 
