@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Dog } from './dog';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,14 @@ import { Dog } from './dog';
 
 export class DogService {
 
+  private dogListSource = new BehaviorSubject<Array<Dog>>([]);
+  currentDogList = this.dogListSource.asObservable();
+
   constructor(private http:HttpClient) { }
+
+  updateDogs(dogs: Dog[]) {
+    this.dogListSource.next(dogs);
+  }
   
   getDogBreeds() {
     let data = this.http.get('https://frontend-take-home-service.fetch.com/dogs/breeds', {withCredentials: true});
@@ -16,7 +24,7 @@ export class DogService {
   }
 
   getAllDogIds() {
-    let data = this.http.get('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true});
+    let data: any = this.http.get('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true});
     return data;
   }
 
@@ -25,9 +33,15 @@ export class DogService {
     return data;
   }
 
+  getFilterDogIds(params: Object) {
+    let newParams = new HttpParams();
+  }
+
   getDogs(ids: string[]) {
     let body: string[] = ids;
     let data = this.http.post('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true});
+    data.subscribe((data: any) => {this.updateDogs(data)});
     return data;
   }
+
 }
