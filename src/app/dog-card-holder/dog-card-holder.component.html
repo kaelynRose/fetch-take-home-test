@@ -3,3 +3,4 @@
         <app-dog-card [dog]="dog"></app-dog-card>
     </mat-grid-tile>
 </mat-grid-list>
+<mat-paginator [length]="totalDogs" [hidePageSize]="true" aria-label="Select page" (page)="handlePageEvent($event)"></mat-paginator>
