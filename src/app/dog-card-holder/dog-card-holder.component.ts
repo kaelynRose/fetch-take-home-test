@@ -39,6 +39,14 @@ export class DogCardHolderComponent {
         this.totalDogs = data.total;
         this.dogService.getDogs(this.searchIds).subscribe((data: any) => {this.dogList = data});
       })
+    } else if (e.previousPageIndex > e.pageIndex) {
+      this.dogService.getNextDogsIds(this.prevString).subscribe((data: any) => {
+        this.searchIds = data.resultIds;
+        this.nextString = data.next;
+        this.prevString = data.prev;
+        this.totalDogs = data.total;
+        this.dogService.getDogs(this.searchIds).subscribe((data: any) => {this.dogList = data});
+      })
     }
   }
 }
