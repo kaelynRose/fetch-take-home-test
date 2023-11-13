@@ -11,6 +11,8 @@ export class NavBarComponent {
 
   constructor (private _router: Router) {}
 
+  isMenuCollapsed: boolean = true;
+
   userLogout = () => {
     let xhr = new XMLHttpRequest();
     let url = `https://frontend-take-home-service.fetch.com/auth/logout`;

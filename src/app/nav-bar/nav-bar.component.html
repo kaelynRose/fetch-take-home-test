@@ -1,7 +1,13 @@
-<mat-toolbar color="primary">
-    <div class="container">
-        <span>Fetch A Dog</span>
-        <span class="spacer"></span>
-        <button mat-button (click)="userLogout()" >Logout</button>
+<mat-toolbar class="navbar navbar-dark navbar-expand-lg" color="primary">
+    <div class="container container-fluid">
+        <span class="navbar-brand">Fetch A Dog</span>
+        <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-controls="navbarNav" aria-expanded="isMenuCollapsed" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav">
+                <button class="nav-item" mat-button (click)="isMenuCollapsed = true" *ngIf="!isMenuCollapsed">Filters</button>
+                <button class="nav-item" mat-button (click)="isMenuCollapsed = true; userLogout()">Logout</button>
+            </div>
+        </div>
     </div>
 </mat-toolbar>
