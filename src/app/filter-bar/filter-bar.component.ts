@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
-import { Subscription } from 'rxjs';
 
 interface BreedCheckbox {
   name: string;
@@ -21,7 +20,6 @@ interface Filters {
 })
 export class FilterBarComponent implements OnInit{
   breedList: BreedCheckbox[] = [];
-  dogSubscription: Subscription = new Subscription();
 
   constructor(private dogService: DogService) { }
 
@@ -45,6 +43,19 @@ export class FilterBarComponent implements OnInit{
     let filters: Filters = {};
     let breedsFilter: string[] = this.breedList.filter(x => x.checked).map(x => x.name);
     filters.breeds = breedsFilter;
-    this.dogService.getFilterDogIds(filters);
+    if (Object.keys(filters).length === 0) {
+      this.dogService.getAllDogs();
+    } else {
+      this.dogService.getFilterDogIds(filters);
+    }
+  }
+
+  clearFilters = async () => {
+    this.breedList = this.breedList.map(x => ({name: x.name, checked: false}));
+    try {
+      await this.dogService.getAllDogs();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
