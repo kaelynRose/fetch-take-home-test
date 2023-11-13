@@ -26,16 +26,19 @@ export class FilterBarComponent implements OnInit{
   constructor(private dogService: DogService) { }
 
   ngOnInit(): void {
-    let dataList: string[] = [];
-    this.dogService.getDogBreeds().subscribe((data: any) => {
-      dataList = data;
-      this.breedList = dataList.map((x: string) => ({
+    this.loadDogBreeds();
+  }
+
+  loadDogBreeds = async () => {
+    try {
+      const breeds = await this.dogService.getDogBreeds() ?? [];
+      this.breedList = breeds.map(x => ({
         name: x,
         checked: false
       }))
-    });
-
-    //this.dogSubscription = this.dogService.currentDogList.subscribe((list: Dog[]) => this.dogList = list);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   filterDogs() {
