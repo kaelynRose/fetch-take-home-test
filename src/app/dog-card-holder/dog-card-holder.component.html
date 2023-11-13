@@ -1,6 +1,6 @@
-<mat-grid-list cols="4" rowHeight="1:2" gutterSize="25px">
-    <mat-grid-tile *ngFor="let dog of dogList" >
+<div class="row">
+    <div class="col-xl-3 col-md-4 col-sm-12" *ngFor="let dog of dogList">
         <app-dog-card [dog]="dog"></app-dog-card>
-    </mat-grid-tile>
-</mat-grid-list>
+    </div>
+</div>
 <mat-paginator [length]="totalDogs" [hidePageSize]="true" aria-label="Select page" (page)="handlePageEvent($event)"></mat-paginator>
