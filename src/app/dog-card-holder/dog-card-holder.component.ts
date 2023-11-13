@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class DogCardHolderComponent implements OnInit {
 
   dogList: Dog[] = [];
-  totalDogs: number = this.dogService.searchResult.total ?? 0;
+  totalDogs: number = 0;
 
   dogSubscription: Subscription = new Subscription();
 
@@ -26,6 +26,7 @@ export class DogCardHolderComponent implements OnInit {
     // Load all dogs by default
     try {
       this.dogList = await this.dogService.getAllDogs();
+      this.totalDogs = this.dogService.searchResult.total;
     } catch (error) {
       this.dogList = [];
       console.error(error);
