@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Dog } from '../dog';
 import { DogService } from '../dog.service';
 import { PageEvent } from '@angular/material/paginator';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dog-card-holder',
@@ -13,8 +12,6 @@ export class DogCardHolderComponent implements OnInit {
 
   dogList: Dog[] = [];
   totalDogs: number = 0;
-
-  dogSubscription: Subscription = new Subscription();
 
   constructor(private dogService: DogService) {}
 
@@ -32,7 +29,6 @@ export class DogCardHolderComponent implements OnInit {
       console.error(error);
     }
   }
-
 
   handlePageEvent = async (e: PageEvent) => {
     if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
