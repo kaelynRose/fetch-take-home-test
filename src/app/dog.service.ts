@@ -3,34 +3,36 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Dog } from './dog';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 
+interface SearchResult {
+  resultIds: string[];
+  total: number;
+  next?: string;
+  prev?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class DogService {
 
-  private dogListSource = new BehaviorSubject<Array<Dog>>([]);
-  currentDogList = this.dogListSource.asObservable();
-
-  nextString: string = "";
-  prevString: string = "";
+  searchResult: SearchResult = {resultIds: [], total: 0};
 
   constructor(private http:HttpClient) { }
-
-  updateDogs(dogs: Dog[]) {
-    this.dogListSource.next(dogs);
-  }
   
   getDogBreeds = () => {
-    let promise = lastValueFrom(this.http.get<string[]>('https://frontend-take-home-service.fetch.com/dogs/breeds', {withCredentials: true}));
+    const promise = lastValueFrom(this.http.get<string[]>('https://frontend-take-home-service.fetch.com/dogs/breeds', {withCredentials: true}));
     return promise;
   }
 
-  getAllDogIds() {
-    let data: any = this.http.get('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true});
-    this.nextString = data.next;
-    this.prevString = data.prev;
-    return data;
+  getAllDogs = async () => {
+    try {
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true}));
+      return this.getDogs(this.searchResult.resultIds);
+    } catch (error) {
+      console.error(error);
+    }
+    return [];
   }
 
   nextDogPage() {
@@ -51,10 +53,9 @@ export class DogService {
     let newParams = new HttpParams();
   }
 
-  getDogs(ids: string[]) {
+  getDogs = (ids: string[]) => {
     let body: string[] = ids;
-    let response: any = this.http.post('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true});
-    response.subscribe((data: any) => {this.updateDogs(data)});
+    const response = lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
     return response;
   }
 

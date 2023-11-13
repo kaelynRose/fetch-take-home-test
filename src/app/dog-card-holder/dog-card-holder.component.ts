@@ -11,44 +11,33 @@ import { Subscription } from 'rxjs';
 })
 export class DogCardHolderComponent implements OnInit {
 
-  searchIds: string[] = [];
-  nextString: string = "";
-  prevString: string = "";
   dogList: Dog[] = [];
-  totalDogs: number = 0;
+  totalDogs: number = this.dogService.searchResult.total ?? 0;
 
   dogSubscription: Subscription = new Subscription();
 
   constructor(private dogService: DogService) {}
 
   ngOnInit() {
-    this.dogSubscription = this.dogService.currentDogList.subscribe((list: Dog[]) => this.dogList = list);
-    this.dogService.getAllDogIds().subscribe((data: any) => {
-      this.nextString = data.next;
-      this.prevString = data.prev;
-      this.totalDogs = data.total;
-      this.dogService.getDogs(data.resultIds);
-    })
+    this.loadAllDogs();
+  }
+
+  loadAllDogs = async () => {
+    // Load all dogs by default
+    try {
+      this.dogList = await this.dogService.getAllDogs();
+    } catch (error) {
+      this.dogList = [];
+      console.error(error);
+    }
   }
 
 
   handlePageEvent(e: PageEvent) {
     if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
-      this.dogService.nextDogPage(this.nextString).subscribe((data: any) => {
-        this.searchIds = data.resultIds;
-        this.nextString = data.next;
-        this.prevString = data.prev;
-        this.totalDogs = data.total;
-        this.dogService.getDogs(this.searchIds).subscribe((data: any) => {this.dogList = data});
-      })
+      this.dogService.nextDogPage();
     } else if (e.previousPageIndex > e.pageIndex) {
-      this.dogService.prevDogPage(this.prevString).subscribe((data: any) => {
-        this.searchIds = data.resultIds;
-        this.nextString = data.next;
-        this.prevString = data.prev;
-        this.totalDogs = data.total;
-        this.dogService.getDogs(this.searchIds).subscribe((data: any) => {this.dogList = data});
-      })
+      this.dogService.prevDogPage();
     }
   }
 }
