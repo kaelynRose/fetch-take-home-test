@@ -41,7 +41,7 @@ export class FilterBarComponent implements OnInit{
     }
   }
 
-  filterDogs() {
+  filterDogs = () => {
     let filters: Filters = {};
     let breedsFilter: string[] = this.breedList.filter(x => x.checked).map(x => x.name);
     filters.breeds = breedsFilter;
