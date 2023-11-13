@@ -28,33 +28,39 @@ export class DogService {
   getAllDogs = async () => {
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true}));
-      return this.getDogs(this.searchResult.resultIds);
+      return this.getDogs();
     } catch (error) {
       console.error(error);
     }
     return [];
   }
 
-  nextDogPage() {
-    let response: any = this.http.get('https://frontend-take-home-service.fetch.com' + this.nextString, {withCredentials: true});
-    this.nextString = response.next;
-    console.log(response.next);
-    this.prevString = response.prev;
-    response.subscribe((data: any) => {this.getDogs(data.resultIds)});
-    //this.getDogs(response.resultIds);
+  nextDogPage = async () => {
+    try {
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com' + this.searchResult.next, {withCredentials: true}));
+      return this.getDogs();
+    } catch (error) {
+      console.error(error);
+    }
+    return [];
   }
 
-  prevDogPage() {
-    let data = this.http.get('https://frontend-take-home-service.fetch.com' + this.prevString, {withCredentials: true});
-    return data;
+  prevDogPage = async () => {
+    try {
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com' + this.searchResult.prev, {withCredentials: true}));
+      return this.getDogs();
+    } catch (error) {
+      console.error(error);
+    }
+    return [];
   }
 
   getFilterDogIds(params: Object) {
     let newParams = new HttpParams();
   }
 
-  getDogs = (ids: string[]) => {
-    let body: string[] = ids;
+  getDogs = () => {
+    let body: string[] = this.searchResult.resultIds;
     const response = lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
     return response;
   }

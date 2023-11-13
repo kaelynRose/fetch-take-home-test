@@ -33,11 +33,21 @@ export class DogCardHolderComponent implements OnInit {
   }
 
 
-  handlePageEvent(e: PageEvent) {
+  handlePageEvent = async (e: PageEvent) => {
     if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
-      this.dogService.nextDogPage();
+      try {
+        this.dogList = await this.dogService.nextDogPage();
+      } catch (error) {
+        this.dogList = [];
+        console.error(error);
+      }
     } else if (e.previousPageIndex > e.pageIndex) {
-      this.dogService.prevDogPage();
+      try {
+        this.dogList = await this.dogService.prevDogPage();
+      } catch (error) {
+        this.dogList = [];
+        console.error(error);
+      }
     }
   }
 }
