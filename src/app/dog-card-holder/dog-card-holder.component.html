@@ -1,6 +1,20 @@
+<div class="row justify-content-end mb-3">
+    <div class="col-3">
+        <label>
+            Sort By
+            <select id="sortSelector" [formControl]="sortSelect" (change)="sortDogs($event)">
+                <option *ngFor="let option of sortOptions" [value]="option.apiString" [attr.selected]="option.selected==true ? true : null">{{ option.text }}</option>
+            </select>
+        </label>
+    </div>
+</div>
 <div class="row">
     <div class="col-xl-3 col-md-4 col-sm-12" *ngFor="let dog of dogList">
         <app-dog-card [dog]="dog"></app-dog-card>
     </div>
 </div>
-<mat-paginator [length]="totalDogs" [hidePageSize]="true" aria-label="Select page" (page)="handlePageEvent($event)"></mat-paginator>
+<div class="row">
+    <div class="col-12">
+        <mat-paginator [length]="totalDogs" [hidePageSize]="true" aria-label="Select page" (page)="handlePageEvent($event)"></mat-paginator>
+    </div>
+</div>

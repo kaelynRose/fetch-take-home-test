@@ -59,6 +59,17 @@ export class DogService {
     let newParams = new HttpParams();
   }
 
+  getSortedDogs = async (sortString: string) => {
+    try {
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search?sort=' + sortString, {withCredentials: true}));
+      return this.getDogs();
+    } catch (error) {
+      console.error(error);
+    }
+    return [];
+
+  }
+
   getDogs = () => {
     let body: string[] = this.searchResult.resultIds;
     const response = lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
