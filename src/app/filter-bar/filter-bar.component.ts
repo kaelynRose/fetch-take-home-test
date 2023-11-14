@@ -46,7 +46,7 @@ export class FilterBarComponent implements OnInit{
     if (Object.keys(filters).length === 0) {
       this.dogService.getAllDogs();
     } else {
-      this.dogService.getFilterDogIds(filters);
+      this.dogService.getFilteredDogs(filters);
     }
   }
 

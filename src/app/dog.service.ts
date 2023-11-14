@@ -61,7 +61,7 @@ export class DogService {
     return [];
   }
 
-  getFilterDogIds(params: Object) {
+  getFilteredDogs(params: Object) {
     let newParams = new HttpParams();
   }
 
