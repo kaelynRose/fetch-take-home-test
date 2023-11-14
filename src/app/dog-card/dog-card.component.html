@@ -9,6 +9,7 @@
         <p><span>Zip Code:</span> {{ dog.zip_code }}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-flat-button color="accent" (click)="addToFavorites(dog.id)">FAVORITE</button>
+        <button mat-flat-button color="accent" (click)="addToFavorites(dog.id)" *ngIf="!isFavorite(dog.id)">FAVORITE</button>
+        <button mat-stroked-button color="basic" (click)="removeFromFavorites(dog.id)" *ngIf="isFavorite(dog.id)">UNFAVORITE</button>
     </mat-card-actions>
 </mat-card>

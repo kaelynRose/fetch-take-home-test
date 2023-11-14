@@ -83,7 +83,10 @@ export class DogService {
 
   favoriteDog = (id: string) => {
     this.favoriteDogs.push(id);
-    console.log(this.favoriteDogs);
+  }
+
+  unfavoriteDog = (id: string) => {
+    this.favoriteDogs = this.favoriteDogs.filter(x => {x != id;})
   }
 
   matchDog = async () => {

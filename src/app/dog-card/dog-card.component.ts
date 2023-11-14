@@ -16,4 +16,14 @@ export class DogCardComponent{
   addToFavorites = (dogId: string) => {
     this.dogService.favoriteDog(dogId);
   }
+
+  isFavorite = (dogId: string) => {
+    if (this.dogService.favoriteDogs.includes(dogId)) {
+      return true;
+    } else {return false;}
+  }
+
+  removeFromFavorites = (dogId: string) => {
+    this.dogService.unfavoriteDog(dogId);
+  }
 }
