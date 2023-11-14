@@ -9,6 +9,6 @@
         <p><span>Zip Code:</span> {{ dog.zip_code }}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-flat-button color="accent">FAVORITE</button>
+        <button mat-flat-button color="accent" (click)="addToFavorites(dog.id)">FAVORITE</button>
     </mat-card-actions>
 </mat-card>

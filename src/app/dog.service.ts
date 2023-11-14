@@ -10,6 +10,10 @@ interface SearchResult {
   prev?: string;
 }
 
+interface Match {
+  match: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +21,8 @@ interface SearchResult {
 export class DogService {
 
   searchResult: SearchResult = {resultIds: [], total: 0};
+  favoriteDogs: string[] = [];
+  matchedDog: Dog = new Dog();
 
   constructor(private http:HttpClient) { }
   
@@ -67,13 +73,28 @@ export class DogService {
       console.error(error);
     }
     return [];
-
   }
 
   getDogs = () => {
     let body: string[] = this.searchResult.resultIds;
     const response = lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
     return response;
+  }
+
+  favoriteDog = (id: string) => {
+    this.favoriteDogs.push(id);
+    console.log(this.favoriteDogs);
+  }
+
+  matchDog = async () => {
+    let body: string[] = this.favoriteDogs;
+    try {
+      const match = await lastValueFrom(this.http.post<Match>('https://frontend-take-home-service.fetch.com/dogs/match', body, {withCredentials: true}));
+      let matchBody: string[] = [match.match];
+      this.matchedDog = await lastValueFrom(this.http.post<Dog>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
 }

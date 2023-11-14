@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DogService } from '../dog.service';
 
 
 @Component({
@@ -9,9 +10,10 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent {
 
-  constructor (private _router: Router) {}
+  constructor (private _router: Router, private dogService: DogService) {}
 
   isMenuCollapsed: boolean = true;
+  favoriteDogsLength: number = this.dogService.favoriteDogs.length;
 
   userLogout = () => {
     let xhr = new XMLHttpRequest();
@@ -26,5 +28,9 @@ export class NavBarComponent {
         }
     }
     xhr.send();
+  }
+
+  findMatch = () => {
+    this.dogService.matchDog();
   }
 }
