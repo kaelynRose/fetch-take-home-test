@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Dog } from './dog';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 interface SearchResult {
   resultIds: string[];
@@ -12,6 +12,13 @@ interface SearchResult {
 
 interface Match {
   match: string;
+}
+
+interface SearchParameters {
+  breeds?: string[];
+  zipCodes?: string[];
+  ageMin?: number;
+  ageMax?: number;
 }
 
 @Injectable({
@@ -61,8 +68,36 @@ export class DogService {
     return [];
   }
 
-  getFilteredDogs(params: Object) {
+  getFilteredDogs = async (params: SearchParameters) => {
     let newParams = new HttpParams();
+
+    if (params.breeds?.length != undefined && params.breeds?.length > 0) {
+      for (let breed of params.breeds) {
+        newParams = newParams.append("breeds", breed);
+      }
+    }
+
+    if (params.zipCodes?.length != undefined && params.zipCodes?.length > 0) {
+      for (let zip of params.zipCodes) {
+        newParams = newParams.append('zipCodes', zip);
+      }
+    }
+
+    if (params.ageMin != undefined && params.ageMin >= 0) {
+      newParams = newParams.set('ageMin', params.ageMin.toString());
+    }
+
+    if (params.ageMax != undefined && params.ageMax >= 0) {
+      newParams = newParams.set('ageMax', params.ageMax.toString());
+    }
+
+    try {
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search', {params: newParams, withCredentials: true}));
+      return this.getDogs();
+    } catch (error) {
+      console.error(error);
+    }
+    return [];    
   }
 
   getSortedDogs = async (sortString: string) => {
