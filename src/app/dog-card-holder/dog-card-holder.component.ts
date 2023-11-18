@@ -37,7 +37,11 @@ export class DogCardHolderComponent implements OnInit {
       this.dogService.nextDogPage();
     } else if (e.previousPageIndex > e.pageIndex) {
       this.dogService.prevDogPage();
+    } else {
+      this.dogService.searchSize = e.pageSize;
+      this.dogService.getAllDogs();
     }
+    window.scrollTo(0,0);
   }
 
   sortDogs = async (e: any) => {
@@ -50,5 +54,6 @@ export class DogCardHolderComponent implements OnInit {
         console.error(error);
       }
     }
+    window.scrollTo(0,0);
   }
 }
