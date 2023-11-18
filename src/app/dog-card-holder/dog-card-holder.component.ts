@@ -45,7 +45,7 @@ export class DogCardHolderComponent implements OnInit {
       this.dogService.getAllDogs();
     } else {
       try {
-        // this.dogList = await this.dogService.getSortedDogs(e.target.value);
+        this.dogService.getSortedDogs(e.target.value);
       } catch (error) {
         console.error(error);
       }

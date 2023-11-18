@@ -51,21 +51,19 @@ export class DogService {
   nextDogPage = async () => {
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com' + this.searchResult.next, {withCredentials: true}));
-      return this.getDogs();
+      this.getDogs();
     } catch (error) {
       console.error(error);
     }
-    return [];
   }
 
   prevDogPage = async () => {
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com' + this.searchResult.prev, {withCredentials: true}));
-      return this.getDogs();
+      this.getDogs();
     } catch (error) {
       console.error(error);
     }
-    return [];
   }
 
   getFilteredDogs = async (params: SearchParameters) => {
@@ -93,21 +91,19 @@ export class DogService {
 
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search', {params: newParams, withCredentials: true}));
-      return this.getDogs();
+      this.getDogs();
     } catch (error) {
       console.error(error);
     }
-    return [];    
   }
 
   getSortedDogs = async (sortString: string) => {
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search?sort=' + sortString, {withCredentials: true}));
-      return this.getDogs();
+      this.getDogs();
     } catch (error) {
       console.error(error);
     }
-    return [];
   }
 
   getDogs = async () => {
