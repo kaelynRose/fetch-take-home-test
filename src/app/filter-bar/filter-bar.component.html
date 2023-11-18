@@ -3,14 +3,27 @@
         <mat-card-title>Filters</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <mat-card-subtitle>Dog Breeds</mat-card-subtitle>
-        <div id="breedContainer">
+        <mat-card-subtitle class="mb-2">Dog Breeds</mat-card-subtitle>
+        <div id="breedContainer" class="mb-3">
              <div *ngFor="let breed of breedList">
                 <label>
                     <mat-checkbox color="primary" [(ngModel)]="breed.checked"></mat-checkbox>
                     {{ breed.name }}
                 </label>
             </div>
+        </div>
+        <mat-card-subtitle class="mb-2">Age</mat-card-subtitle>
+        <div id="ageContainer" class="mb-3">
+            <mat-form-field appearance="outline" class="mb-3">
+                <mat-label>Minimum Age</mat-label>
+                <input type="number" matInput [formControl]="ageMin" min="0" [max]="ageMax ? ageMax.value : 30" placeholder="0">
+                <mat-error *ngIf="ageMin.invalid">{{ getAgeMinErrorMessage() }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mb-3">
+                <mat-label>Maximum Age</mat-label>
+                <input type="number" matInput [formControl]="ageMax" [min]="ageMin ? ageMin.value : 0" max="30" placeholder="30">
+                <!-- <mat-error *ngIf="ageMax.invalid">{{ getAgeMaxErrorMessage() }}</mat-error> -->
+            </mat-form-field>
         </div>
     </mat-card-content>
     <mat-card-actions>

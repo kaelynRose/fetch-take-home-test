@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
+import { FormControl, Validators } from '@angular/forms';
 
 interface BreedCheckbox {
   name: string;
@@ -20,6 +21,8 @@ interface Filters {
 })
 export class FilterBarComponent implements OnInit{
   breedList: BreedCheckbox[] = [];
+  ageMin = new FormControl('', [Validators.min(0), Validators.max(30)]);
+  ageMax = new FormControl('', [Validators.min(0), Validators.max(30)]);
 
   constructor(private dogService: DogService) { }
 
@@ -39,9 +42,31 @@ export class FilterBarComponent implements OnInit{
     }
   }
 
+  getAgeMinErrorMessage = () => {
+    if (this.ageMin.hasError('min')) {
+      return `Minimum value is 0`;
+    }
+    return `Maximum value is ${this.ageMax.value ? this.ageMax.value : 30}`;
+  }
+
+  getAgeMaxErrorMessage = () => {
+    if (this.ageMax.hasError('min')) {
+      return `Minimum value is ${this.ageMin.value ? this.ageMin.value : 30}`;
+    }
+    return `Maximum value is 30`;
+  }
+
   filterDogs = () => {
     let filters: Filters = {};
     let breedsFilter: string[] = this.breedList.filter(x => x.checked).map(x => x.name);
+    let ageMaxValue: string | null = this.ageMax.value;
+    let ageMinValue: string | null = this.ageMin.value;
+    if (ageMaxValue != null) {
+      filters.ageMax = parseInt(ageMaxValue);
+    }
+    if (ageMinValue != null) {
+      filters.ageMin = parseInt(ageMinValue);
+    }
     filters.breeds = breedsFilter;
     if (Object.keys(filters).length === 0) {
       this.dogService.getAllDogs();
@@ -52,10 +77,8 @@ export class FilterBarComponent implements OnInit{
 
   clearFilters = async () => {
     this.breedList = this.breedList.map(x => ({name: x.name, checked: false}));
-    try {
-      await this.dogService.getAllDogs();
-    } catch (error) {
-      console.error(error);
-    }
+    this.ageMin.setValue('');
+    this.ageMax.setValue('');
+    this.dogService.getAllDogs();
   }
 }
