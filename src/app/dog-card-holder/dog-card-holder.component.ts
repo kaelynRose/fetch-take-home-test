@@ -28,7 +28,7 @@ export class DogCardHolderComponent implements OnInit {
 
   sortSelect = new FormControl(this.sortOptions[0].apiString, Validators.required);
 
-  constructor(private dogService: DogService) {}
+  constructor(public dogService: DogService) {}
 
   ngOnInit() {
     this.loadAllDogs();
@@ -36,26 +36,20 @@ export class DogCardHolderComponent implements OnInit {
 
   loadAllDogs = async () => {
     // Load all dogs by default
-    try {
-      this.dogList = await this.dogService.getAllDogs();
-      this.totalDogs = this.dogService.searchResult.total;
-    } catch (error) {
-      this.dogList = [];
-      console.error(error);
-    }
+    this.dogService.getAllDogs();
   }
 
   handlePageEvent = async (e: PageEvent) => {
     if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
       try {
-        this.dogList = await this.dogService.nextDogPage();
+        // this.dogList = await this.dogService.nextDogPage();
       } catch (error) {
         this.dogList = [];
         console.error(error);
       }
     } else if (e.previousPageIndex > e.pageIndex) {
       try {
-        this.dogList = await this.dogService.prevDogPage();
+        // this.dogList = await this.dogService.prevDogPage();
       } catch (error) {
         this.dogList = [];
         console.error(error);
@@ -68,7 +62,7 @@ export class DogCardHolderComponent implements OnInit {
       this.loadAllDogs();
     } else {
       try {
-        this.dogList = await this.dogService.getSortedDogs(e.target.value);
+        // this.dogList = await this.dogService.getSortedDogs(e.target.value);
         this.totalDogs = this.dogService.searchResult.total;
       } catch (error) {
         this.dogList = [];

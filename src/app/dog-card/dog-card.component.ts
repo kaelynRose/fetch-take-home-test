@@ -11,7 +11,7 @@ import { DogService } from '../dog.service';
 export class DogCardComponent{
   @Input() dog?: Dog;
 
-  constructor(private dogService: DogService) {}
+  constructor(public dogService: DogService) {}
 
   addToFavorites = (dogId: string) => {
     this.dogService.favoriteDog(dogId);

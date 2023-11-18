@@ -28,6 +28,7 @@ interface SearchParameters {
 export class DogService {
 
   searchResult: SearchResult = {resultIds: [], total: 0};
+  dogList: Dog[] = [];
   favoriteDogs: string[] = [];
   matchedDog: Dog = new Dog();
 
@@ -41,11 +42,10 @@ export class DogService {
   getAllDogs = async () => {
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true}));
-      return this.getDogs();
+      this.getDogs();
     } catch (error) {
       console.error(error);
     }
-    return [];
   }
 
   nextDogPage = async () => {
@@ -110,10 +110,15 @@ export class DogService {
     return [];
   }
 
-  getDogs = () => {
+  getDogs = async () => {
     let body: string[] = this.searchResult.resultIds;
-    const response = lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
-    return response;
+    let response: Dog[];
+    try {
+      response = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
+      this.dogList = response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   favoriteDog = (id: string) => {
