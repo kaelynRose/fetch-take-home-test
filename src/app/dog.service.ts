@@ -31,6 +31,7 @@ export class DogService {
   dogList: Dog[] = [];
   favoriteDogs: string[] = [];
   matchedDog: Dog = new Dog();
+  searchSize: number = 25;
 
   constructor(private http:HttpClient) { }
   
@@ -41,7 +42,7 @@ export class DogService {
 
   getAllDogs = async () => {
     try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc', {withCredentials: true}));
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?size=${this.searchSize}&sort=breed:asc`, {withCredentials: true}));
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -50,7 +51,7 @@ export class DogService {
 
   nextDogPage = async () => {
     try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com' + this.searchResult.next, {withCredentials: true}));
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com${this.searchResult.next}&size=${this.searchSize}`, {withCredentials: true}));
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -59,7 +60,7 @@ export class DogService {
 
   prevDogPage = async () => {
     try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com' + this.searchResult.prev, {withCredentials: true}));
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com${this.searchResult.prev}&size=${this.searchSize}`, {withCredentials: true}));
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -90,7 +91,7 @@ export class DogService {
     }
 
     try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search', {params: newParams, withCredentials: true}));
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?${this.searchResult.next}&size=${this.searchSize}`, {params: newParams, withCredentials: true}));
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -99,7 +100,7 @@ export class DogService {
 
   getSortedDogs = async (sortString: string) => {
     try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>('https://frontend-take-home-service.fetch.com/dogs/search?sort=' + sortString, {withCredentials: true}));
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?sort=${sortString}&size=${this.searchSize}`, {withCredentials: true}));
       this.getDogs();
     } catch (error) {
       console.error(error);
