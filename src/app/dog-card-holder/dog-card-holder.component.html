@@ -15,6 +15,6 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <mat-paginator [length]="totalDogs" [hidePageSize]="true" aria-label="Select page" (page)="handlePageEvent($event)"></mat-paginator>
+        <mat-paginator [length]="dogService.searchResult.total" [hidePageSize]="true" aria-label="Select page" (page)="handlePageEvent($event)"></mat-paginator>
     </div>
 </div>
