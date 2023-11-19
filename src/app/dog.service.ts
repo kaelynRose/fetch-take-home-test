@@ -36,6 +36,7 @@ export class DogService {
   filters: SearchParameters = {};
   searchSize: number = 25;
   httpParams: HttpParams = new HttpParams();
+  inFavorites: boolean = false;
 
   constructor(private http:HttpClient, private router: Router) { }
   
@@ -125,6 +126,7 @@ export class DogService {
   }
 
   getFavoriteDogs = () => {
+    this.inFavorites = !this.inFavorites;
     this.getDogs(this.favoriteDogs);
   }
 

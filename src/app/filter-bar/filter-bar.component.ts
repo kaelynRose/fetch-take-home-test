@@ -24,7 +24,7 @@ export class FilterBarComponent implements OnInit{
   ageMin = new FormControl('', [Validators.min(0), Validators.max(30)]);
   ageMax = new FormControl('', [Validators.min(0), Validators.max(30)]);
 
-  constructor(private dogService: DogService) { }
+  constructor(public dogService: DogService) { }
 
   ngOnInit(): void {
     this.loadDogBreeds();
