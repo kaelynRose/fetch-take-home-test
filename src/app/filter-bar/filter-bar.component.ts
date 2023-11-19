@@ -57,21 +57,21 @@ export class FilterBarComponent implements OnInit{
   }
 
   filterDogs = () => {
-    let filters: Filters = {};
     let breedsFilter: string[] = this.breedList.filter(x => x.checked).map(x => x.name);
     let ageMaxValue: string | null = this.ageMax.value;
     let ageMinValue: string | null = this.ageMin.value;
     if (ageMaxValue != null) {
-      filters.ageMax = parseInt(ageMaxValue);
+      this.dogService.filters.ageMax = parseInt(ageMaxValue);
     }
     if (ageMinValue != null) {
-      filters.ageMin = parseInt(ageMinValue);
+      this.dogService.filters.ageMin = parseInt(ageMinValue);
     }
-    filters.breeds = breedsFilter;
-    if (Object.keys(filters).length === 0) {
+    this.dogService.filters.breeds = breedsFilter;
+    if (Object.keys(this.dogService.filters).length === 0) {
       this.dogService.getAllDogs();
     } else {
-      this.dogService.getFilteredDogs(filters);
+      this.dogService.setFilters();
+      this.dogService.getDogIds();
     }
   }
 
@@ -79,6 +79,7 @@ export class FilterBarComponent implements OnInit{
     this.breedList = this.breedList.map(x => ({name: x.name, checked: false}));
     this.ageMin.setValue('');
     this.ageMax.setValue('');
+    this.dogService.setFilters();
     this.dogService.getAllDogs();
   }
 }

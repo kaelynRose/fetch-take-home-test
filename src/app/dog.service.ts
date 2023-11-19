@@ -32,8 +32,10 @@ export class DogService {
   dogList: Dog[] = [];
   favoriteDogs: string[] = [];
   matchedDog: Dog = new Dog();
-  showMatch: boolean = false;
+  sortString: string = 'breed:asc';
+  filters: SearchParameters = {};
   searchSize: number = 25;
+  httpParams: HttpParams = new HttpParams();
 
   constructor(private http:HttpClient, private router: Router) { }
   
@@ -44,7 +46,7 @@ export class DogService {
 
   getAllDogs = async () => {
     try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?size=${this.searchSize}&sort=breed:asc`, {withCredentials: true}));
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?size=${this.searchSize}&sort=${this.sortString}`, {withCredentials: true}));
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -69,40 +71,31 @@ export class DogService {
     }
   }
 
-  getFilteredDogs = async (params: SearchParameters) => {
-    let newParams = new HttpParams();
-
-    if (params.breeds?.length != undefined && params.breeds?.length > 0) {
-      for (let breed of params.breeds) {
-        newParams = newParams.append("breeds", breed);
+  setFilters = () => {
+    if (this.filters.breeds?.length != undefined && this.filters.breeds?.length > 0) {
+      for (let breed of this.filters.breeds) {
+        this.httpParams = this.httpParams.append("breeds", breed);
       }
     }
 
-    if (params.zipCodes?.length != undefined && params.zipCodes?.length > 0) {
-      for (let zip of params.zipCodes) {
-        newParams = newParams.append('zipCodes', zip);
+    if (this.filters.zipCodes?.length != undefined && this.filters.zipCodes?.length > 0) {
+      for (let zip of this.filters.zipCodes) {
+        this.httpParams = this.httpParams.append('zipCodes', zip);
       }
     }
 
-    if (params.ageMin != undefined && params.ageMin >= 0) {
-      newParams = newParams.set('ageMin', params.ageMin.toString());
+    if (this.filters.ageMin != undefined && this.filters.ageMin >= 0) {
+      this.httpParams = this.httpParams.set('ageMin', this.filters.ageMin.toString());
     }
 
-    if (params.ageMax != undefined && params.ageMax >= 0) {
-      newParams = newParams.set('ageMax', params.ageMax.toString());
-    }
-
-    try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?${this.searchResult.next}&size=${this.searchSize}`, {params: newParams, withCredentials: true}));
-      this.getDogs();
-    } catch (error) {
-      console.error(error);
+    if (this.filters.ageMax != undefined && this.filters.ageMax >= 0) {
+      this.httpParams = this.httpParams.set('ageMax', this.filters.ageMax.toString());
     }
   }
 
-  getSortedDogs = async (sortString: string) => {
+  getDogIds = async () => {
     try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?sort=${sortString}&size=${this.searchSize}`, {withCredentials: true}));
+      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?sort=${this.sortString}&size=${this.searchSize}`, {params: this.httpParams, withCredentials: true}));
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -142,7 +135,6 @@ export class DogService {
       let matchBody: string[] = [match.match];
       let dogs: Dog[] = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
       this.matchedDog = dogs[0];
-      this.showMatch = true;
     } catch (error) {
       console.error(error);
     }

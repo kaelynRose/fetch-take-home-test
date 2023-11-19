@@ -44,14 +44,11 @@ export class DogCardHolderComponent implements OnInit {
   }
 
   sortDogs = async (e: any) => {
-    if (e.target.value == this.sortOptions[0].apiString) {
-      this.dogService.getAllDogs();
-    } else {
-      try {
-        this.dogService.getSortedDogs(e.target.value);
-      } catch (error) {
-        console.error(error);
-      }
+    try {
+      this.dogService.sortString = e.target.value;
+      this.dogService.getDogIds();
+    } catch (error) {
+      console.error(error);
     }
     window.scrollTo(0,0);
   }
