@@ -107,8 +107,11 @@ export class DogService {
     }
   }
 
-  getDogs = async () => {
-    let body: string[] = this.searchResult.resultIds;
+  getDogs = async (searchIds?: string[]) => {
+    let body: string[];
+    if (searchIds) {
+      body = searchIds;
+    } else { body = this.searchResult.resultIds;}
     let response: Dog[];
     try {
       response = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
@@ -124,6 +127,10 @@ export class DogService {
 
   unfavoriteDog = (id: string) => {
     this.favoriteDogs = this.favoriteDogs.filter(x => {x != id;})
+  }
+
+  getFavoriteDogs = () => {
+    this.getDogs(this.favoriteDogs);
   }
 
   matchDog = async () => {
