@@ -22,7 +22,7 @@
             <mat-form-field appearance="outline" class="mb-3">
                 <mat-label>Maximum Age</mat-label>
                 <input type="number" matInput [formControl]="ageMax" [min]="ageMin ? ageMin.value : 0" max="30" placeholder="30">
-                <!-- <mat-error *ngIf="ageMax.invalid">{{ getAgeMaxErrorMessage() }}</mat-error> -->
+                <mat-error *ngIf="ageMax.invalid">{{ getAgeMaxErrorMessage() }}</mat-error>
             </mat-form-field>
         </div>
     </mat-card-content>

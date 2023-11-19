@@ -51,7 +51,7 @@ export class FilterBarComponent implements OnInit{
 
   getAgeMaxErrorMessage = () => {
     if (this.ageMax.hasError('min')) {
-      return `Minimum value is ${this.ageMin.value ? this.ageMin.value : 30}`;
+      return `Minimum value is ${this.ageMin.value ? this.ageMin.value : 0}`;
     }
     return `Maximum value is 30`;
   }
