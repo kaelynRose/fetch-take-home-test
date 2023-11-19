@@ -1,3 +1,6 @@
+#filterCard {
+    max-width: 300px;
+}
 #breedContainer {
     max-height: 300px;
     overflow-y: auto;
