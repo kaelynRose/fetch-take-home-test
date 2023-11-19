@@ -75,22 +75,26 @@ export class DogService {
 
   setFilters = () => {
     if (this.filters.breeds?.length != undefined && this.filters.breeds?.length > 0) {
+      this.httpParams = this.httpParams.set('breeds', '');
       for (let breed of this.filters.breeds) {
-        this.httpParams = this.httpParams.append("breeds", breed);
+        this.httpParams = this.httpParams.append('breeds', breed);
       }
     }
 
     if (this.filters.zipCodes?.length != undefined && this.filters.zipCodes?.length > 0) {
+      this.httpParams = this.httpParams.set('zipCodes', '');
       for (let zip of this.filters.zipCodes) {
         this.httpParams = this.httpParams.append('zipCodes', zip);
       }
     }
 
     if (this.filters.ageMin != undefined && this.filters.ageMin >= 0) {
+      this.httpParams = this.httpParams.delete('ageMin');
       this.httpParams = this.httpParams.set('ageMin', this.filters.ageMin.toString());
     }
 
     if (this.filters.ageMax != undefined && this.filters.ageMax >= 0) {
+      this.httpParams = this.httpParams.delete('ageMax');
       this.httpParams = this.httpParams.set('ageMax', this.filters.ageMax.toString());
     }
   }
