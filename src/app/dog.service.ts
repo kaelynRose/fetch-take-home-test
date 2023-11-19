@@ -48,6 +48,7 @@ export class DogService {
   getAllDogs = async () => {
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?size=${this.searchSize}&sort=${this.sortString}`, {withCredentials: true}));
+      this.inFavorites = false;
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -103,11 +104,8 @@ export class DogService {
     }
   }
 
-  getDogs = async (searchIds?: string[]) => {
-    let body: string[];
-    if (searchIds) {
-      body = searchIds;
-    } else { body = this.searchResult.resultIds;}
+  getDogs = async () => {
+    let body: string[] = this.searchResult.resultIds;
     let response: Dog[];
     try {
       response = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
@@ -126,8 +124,10 @@ export class DogService {
   }
 
   getFavoriteDogs = () => {
-    this.inFavorites = !this.inFavorites;
-    this.getDogs(this.favoriteDogs);
+    this.inFavorites = true;
+    this.searchResult.resultIds = this.favoriteDogs;
+    this.searchResult.total = this.favoriteDogs.length;
+    this.getDogs();
   }
 
   matchDog = async () => {

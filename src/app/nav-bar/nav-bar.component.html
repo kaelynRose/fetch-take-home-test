@@ -1,6 +1,6 @@
 <mat-toolbar class="navbar navbar-dark navbar-expand-lg sticky-top" color="primary">
     <div class="container container-fluid">
-        <a href="/home" class="navbar-brand">Fetch A Dog</a>
+        <button mat-button (click)="this.dogService.getAllDogs(); this.dogService.inFavorites = false;" class="navbar-brand">Fetch A Dog</button>
         <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-controls="navbarNav" aria-expanded="isMenuCollapsed" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarNav">
