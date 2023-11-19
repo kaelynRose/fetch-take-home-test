@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DogService } from '../dog.service';
 import { LoginService } from '../login.service';
+import { MatchComponent } from '../match/match.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { LoginService } from '../login.service';
 })
 export class NavBarComponent {
 
-  constructor (private _router: Router, public dogService: DogService, public loginService: LoginService) {}
+  constructor (private _router: Router, public dogService: DogService, public loginService: LoginService, public modalService: NgbModal) {}
 
   isMenuCollapsed: boolean = true;
 
@@ -21,5 +23,6 @@ export class NavBarComponent {
 
   findMatch = () => {
     this.dogService.matchDog();
+    this.modalService.open(MatchComponent);
   }
 }

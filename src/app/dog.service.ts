@@ -32,6 +32,7 @@ export class DogService {
   dogList: Dog[] = [];
   favoriteDogs: string[] = [];
   matchedDog: Dog = new Dog();
+  showMatch: boolean = false;
   searchSize: number = 25;
 
   constructor(private http:HttpClient, private router: Router) { }
@@ -135,20 +136,15 @@ export class DogService {
   }
 
   matchDog = async () => {
-    if (!this.matchedDog.id) {
-      let body: string[] = this.favoriteDogs;
-      try {
-        const match = await lastValueFrom(this.http.post<Match>('https://frontend-take-home-service.fetch.com/dogs/match', body, {withCredentials: true}));
-        let matchBody: string[] = [match.match];
-        let dogs: Dog[] = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
-        this.matchedDog = dogs[0];
-        this.router.navigate(['match']);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      this.router.navigate(['match']);
+    let body: string[] = this.favoriteDogs;
+    try {
+      const match = await lastValueFrom(this.http.post<Match>('https://frontend-take-home-service.fetch.com/dogs/match', body, {withCredentials: true}));
+      let matchBody: string[] = [match.match];
+      let dogs: Dog[] = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
+      this.matchedDog = dogs[0];
+      this.showMatch = true;
+    } catch (error) {
+      console.error(error);
     }
   }
-
 }

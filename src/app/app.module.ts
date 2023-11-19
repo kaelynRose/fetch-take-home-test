@@ -57,8 +57,7 @@ import { MatchComponent } from './match/match.component';
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full'},
       { path: 'login', component: LoginFormComponent },
-      { path: 'home', component: HomeComponent },
-      { path: 'match', component: MatchComponent }
+      { path: 'home', component: HomeComponent }
     ])
   ],
   providers: [],

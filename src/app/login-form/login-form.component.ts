@@ -28,8 +28,8 @@ export class LoginFormComponent {
   }
 
   login = () => {
-    let userName = this.name.value;
-    let userEmail = this.email.value;
+    let userName = this.name.value?.toString();
+    let userEmail = this.email.value?.toString();
     if (userName && userEmail) {
       this.loginService.userLogin(userName, userEmail);
     }
