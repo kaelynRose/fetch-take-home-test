@@ -140,7 +140,8 @@ export class DogService {
       try {
         const match = await lastValueFrom(this.http.post<Match>('https://frontend-take-home-service.fetch.com/dogs/match', body, {withCredentials: true}));
         let matchBody: string[] = [match.match];
-        this.matchedDog = await lastValueFrom(this.http.post<Dog>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
+        let dogs: Dog[] = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
+        this.matchedDog = dogs[0];
         this.router.navigate(['match']);
       } catch (error) {
         console.error(error);

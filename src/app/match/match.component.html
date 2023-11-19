@@ -1,1 +1,15 @@
-<p>match works!</p>
+<app-nav-bar></app-nav-bar>
+<div class="container">
+    <div class="row text-center">
+        <h1>Congratulations!</h1>
+        <p>You've been matched with ...</p>
+    </div>
+    <div class="row mx-auto mt-3 justify-content-md-center">
+        <mat-card class="col-md-6" appearance="raised">
+            <mat-card-header>
+                <mat-card-title class="text-center">{{ dogService.matchedDog.name }}</mat-card-title>
+            </mat-card-header>
+            <img src="{{ dogService.matchedDog.img }}" mat-card-image class="mb-3">
+        </mat-card>
+    </div>
+</div>
