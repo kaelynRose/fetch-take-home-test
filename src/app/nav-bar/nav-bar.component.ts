@@ -21,8 +21,12 @@ export class NavBarComponent {
     this._router.navigate(['home']);
   }
 
-  findMatch = () => {
-    this.dogService.matchDog();
-    this.modalService.open(MatchComponent);
+  findMatch = async () => {
+    try {
+      await this.dogService.matchDog();
+      this.modalService.open(MatchComponent);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
