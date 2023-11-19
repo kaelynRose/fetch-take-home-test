@@ -24,6 +24,7 @@ import { DogCardHolderComponent } from './dog-card-holder/dog-card-holder.compon
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { MatchComponent } from './match/match.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     LoginFormComponent,
     FilterBarComponent,
     HomeComponent,
-    DogCardHolderComponent
+    DogCardHolderComponent,
+    MatchComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full'},
       { path: 'login', component: LoginFormComponent },
-      { path: 'home', component: HomeComponent }
+      { path: 'home', component: HomeComponent },
+      { path: 'match', component: MatchComponent }
     ])
   ],
   providers: [],

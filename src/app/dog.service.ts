@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Dog } from './dog';
 import { lastValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface SearchResult {
   resultIds: string[];
@@ -33,7 +34,7 @@ export class DogService {
   matchedDog: Dog = new Dog();
   searchSize: number = 25;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router: Router) { }
   
   getDogBreeds = () => {
     const promise = lastValueFrom(this.http.get<string[]>('https://frontend-take-home-service.fetch.com/dogs/breeds', {withCredentials: true}));
@@ -134,13 +135,18 @@ export class DogService {
   }
 
   matchDog = async () => {
-    let body: string[] = this.favoriteDogs;
-    try {
-      const match = await lastValueFrom(this.http.post<Match>('https://frontend-take-home-service.fetch.com/dogs/match', body, {withCredentials: true}));
-      let matchBody: string[] = [match.match];
-      this.matchedDog = await lastValueFrom(this.http.post<Dog>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
-    } catch (error) {
-      console.error(error);
+    if (!this.matchedDog.id) {
+      let body: string[] = this.favoriteDogs;
+      try {
+        const match = await lastValueFrom(this.http.post<Match>('https://frontend-take-home-service.fetch.com/dogs/match', body, {withCredentials: true}));
+        let matchBody: string[] = [match.match];
+        this.matchedDog = await lastValueFrom(this.http.post<Dog>('https://frontend-take-home-service.fetch.com/dogs', matchBody, {withCredentials: true}));
+        this.router.navigate(['match']);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      this.router.navigate(['match']);
     }
   }
 
