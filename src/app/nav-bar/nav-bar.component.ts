@@ -15,6 +15,10 @@ export class NavBarComponent {
 
   isMenuCollapsed: boolean = true;
 
+  goHome = () => {
+    this._router.navigate(['home']);
+  }
+
   findMatch = () => {
     this.dogService.matchDog();
   }
