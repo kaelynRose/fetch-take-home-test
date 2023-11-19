@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login-form',
@@ -11,11 +12,9 @@ import { Router } from '@angular/router';
 export class LoginFormComponent {
   name = new FormControl('', Validators.required);
   email = new FormControl('', [Validators.required, Validators.email]);
-  userName: string = "";
-  userEmail: string = "";
   showComponent: boolean = true;
 
-  constructor (private _router: Router) {}
+  constructor (private _router: Router, public loginService: LoginService) {}
 
   getNameErrorMessage = () => {
     return 'You must enter a value';
@@ -28,28 +27,11 @@ export class LoginFormComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  userLogin = () => {
-    let xhr = new XMLHttpRequest();
-    let url = 'https://frontend-take-home-service.fetch.com/auth/login';
-    let body = {
-        name : this.userName,
-        email: this.userEmail
-    };
-
-    xhr.open("post", url);
-
-    xhr.withCredentials = true;
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("credentials", "include");
-
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log("Login Successful");
-            this._router.navigate(['home']);
-        }
+  login = () => {
+    let userName = this.name.value;
+    let userEmail = this.email.value;
+    if (userName && userEmail) {
+      this.loginService.userLogin(userName, userEmail);
     }
-
-    xhr.send(JSON.stringify(body));
   }
-
 }

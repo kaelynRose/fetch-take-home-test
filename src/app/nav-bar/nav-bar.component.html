@@ -7,7 +7,7 @@
             <div class="navbar-nav">
                 <button class="nav-item" mat-button (click)="isMenuCollapsed = true" *ngIf="!isMenuCollapsed">Filters</button>
                 <button class="nav-item" mat-button (click)="isMenuCollapsed = true">My Favorite Dogs</button>
-                <button class="nav-item" mat-button (click)="isMenuCollapsed = true; userLogout()">Logout</button>
+                <button class="nav-item" mat-button (click)="isMenuCollapsed = true; this.loginService.userLogout()">Logout</button>
             </div>
         </div>
     </div>

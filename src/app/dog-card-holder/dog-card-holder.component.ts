@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Dog } from '../dog';
 import { DogService } from '../dog.service';
 import { PageEvent } from '@angular/material/paginator';
 import { FormControl, Validators } from '@angular/forms';
