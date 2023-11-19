@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +16,16 @@ export class LoginService {
       email : userEmail
     };
     try {
-      this.http.post('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true});
+      lastValueFrom(this.http.post('https://frontend-take-home-service.fetch.com/auth/login', body,{withCredentials: true}));
       this.router.navigate(['home']);
     } catch (error) {
       console.error(error);
     }
   }
 
-  userLogout = () => {
+  userLogout = async () => {
     try {
-      this.http.get('https://frontend-take-home-service.getch.com/auth/logout');
+      await this.http.get('https://frontend-take-home-service.fetch.com/auth/logout');
       this.router.navigate(['login']);
     } catch (error) {
       console.error(error);
