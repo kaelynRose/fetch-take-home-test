@@ -1,9 +1,9 @@
 <div class="modal-header">
-    <h1 class="modal-title text-center">Your Match</h1>
-    <p class="text-center">Congratulations! You've been matched with...</p>
+    <p class="h1 modal-title">Your Match</p>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">
-    <h2 class="mb-3">{{ dogService.matchedDog.name }}</h2>
+    <p class="h2 text-center">Congratulations! You've been matched with...</p>
+    <p class="h3 text-center mb-3">{{ dogService.matchedDog.name }}</p>
     <img src="{{ dogService.matchedDog.img }}">
 </div>
