@@ -157,13 +157,23 @@ export class DogService {
       for (startIndex; startIndex < this.searchSize + startIndex && startIndex < this.favoriteDogs.length; startIndex++) {
         this.searchResult.resultIds.push(this.favoriteDogs[startIndex]);
       }
-      console.log(startIndex);
-      
+      this.searchResult.next = startIndex.toString();
+      this.searchResult.prev = (startIndex - this.searchSize - this.searchResult.resultIds.length).toString();
+      this.getDogs();      
     }
   }
 
   getPrevFavoriteDogs = () => {
-
+    if (this.searchResult.prev != undefined) {
+      this.searchResult.resultIds = [];
+      let startIndex = parseInt(this.searchResult.prev);
+      this.searchResult.next = (startIndex + this.searchSize).toString();
+      for (startIndex; startIndex < this.searchSize + startIndex && startIndex < this.favoriteDogs.length; startIndex++) {
+        this.searchResult.resultIds.push(this.favoriteDogs[startIndex]);
+      }
+      this.searchResult.prev = (startIndex - this.favoriteDogs.length).toString();
+      this.getDogs();      
+    }
   }
 
   matchDog = async () => {
