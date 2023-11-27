@@ -31,19 +31,7 @@ export class DogCardHolderComponent implements OnInit {
     this.dogService.getAllDogs();
   }
 
-  handlePageEvent = async (e: PageEvent) => {
-    if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
-      this.dogService.nextDogPage();
-    } else if (e.previousPageIndex > e.pageIndex) {
-      this.dogService.prevDogPage();
-    } else {
-      this.dogService.searchSize = e.pageSize;
-      this.dogService.getAllDogs();
-    }
-    window.scrollTo(0,0);
-  }
-
-  sortDogs = async (e: any) => {
+  sortDogs = (e: any) => {
     try {
       this.dogService.sortString = e.target.value;
       this.dogService.getDogIds();

@@ -1,0 +1,1 @@
+<mat-paginator [length]="dogService.searchResult.total" [pageSizeOptions]="[25, 50, 100]" aria-label="Select page" [pageSize]="this.dogService.searchSize" (page)="handlePageEvent($event)" [pageIndex]="this.pageIndex"></mat-paginator>

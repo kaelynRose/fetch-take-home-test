@@ -15,6 +15,6 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <mat-paginator [length]="dogService.searchResult.total" [pageSizeOptions]="[25, 50, 100]" aria-label="Select page" [pageSize]="this.dogService.searchSize" (page)="handlePageEvent($event)"></mat-paginator>
+        <app-paginator></app-paginator>
     </div>
 </div>

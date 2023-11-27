@@ -25,6 +25,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatchComponent } from './match/match.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MatchComponent } from './match/match.component';
     FilterBarComponent,
     HomeComponent,
     DogCardHolderComponent,
-    MatchComponent
+    MatchComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
