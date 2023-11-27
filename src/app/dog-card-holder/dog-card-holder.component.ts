@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
-import { PageEvent } from '@angular/material/paginator';
 import { FormControl, Validators } from '@angular/forms';
 
 interface SortOptions {
@@ -39,5 +38,9 @@ export class DogCardHolderComponent implements OnInit {
       console.error(error);
     }
     window.scrollTo(0,0);
+  }
+
+  showFiltersMenu = () => {
+    this.dogService.showFilters = !this.dogService.showFilters;
   }
 }
