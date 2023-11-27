@@ -134,7 +134,7 @@ export class DogService {
   }
 
   unfavoriteDog = (id: string) => {
-    this.favoriteDogs = this.favoriteDogs.filter(x => {x != id;})
+    this.favoriteDogs = this.favoriteDogs.filter((x: string) => x != id)
   }
 
   getFavoriteDogs = () => {
