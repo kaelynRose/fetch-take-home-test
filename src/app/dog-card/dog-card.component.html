@@ -4,9 +4,9 @@
     </mat-card-header>
     <img mat-card-image src="{{ dog.img }}">
     <mat-card-content>
-        <p><span>Breed:</span> {{ dog.breed }}</p>
-        <p><span>Age:</span> {{ dog.age }}</p>
-        <p><span>Zip Code:</span> {{ dog.zip_code }}</p>
+        <p><span class="fw-bold">Breed:</span> {{ dog.breed }}</p>
+        <p><span class="fw-bold">Age:</span> {{ dog.age }}</p>
+        <p><span class="fw-bold">Zip Code:</span> {{ dog.zip_code }}</p>
     </mat-card-content>
     <mat-card-actions>
         <button mat-flat-button color="accent" (click)="addToFavorites(dog.id)" *ngIf="!isFavorite(dog.id)">FAVORITE</button>
