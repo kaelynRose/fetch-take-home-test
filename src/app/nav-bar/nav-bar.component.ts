@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
+
 export class NavBarComponent {
 
   constructor (private _router: Router, public dogService: DogService, public loginService: LoginService, public modalService: NgbModal) {}
