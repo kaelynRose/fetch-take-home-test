@@ -4,18 +4,18 @@
         <mat-card-subtitle>Please login to continue</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input type="text" matInput placeholder="John" [formControl]="name" required>
-            <mat-error *ngIf="name.invalid">{{ getNameErrorMessage() }}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>E-mail Address</mat-label>
-            <input type="email" matInput placeholder="john@email.com" [formControl]="email" required>
-            <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
-        </mat-form-field>
+        <form (ngSubmit)="login()">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput placeholder="John" [formControl]="name" required>
+                <mat-error *ngIf="name.invalid">{{ getNameErrorMessage() }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>E-mail Address</mat-label>
+                <input type="email" matInput placeholder="john@email.com" [formControl]="email" required>
+                <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
+            </mat-form-field>
+            <button type="submit" mat-flat-button color="primary" (click)="login()">LOGIN</button>
+        </form>
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-flat-button color="primary" (click)="login()">LOGIN</button>
-    </mat-card-actions>
 </mat-card>

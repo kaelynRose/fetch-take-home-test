@@ -28,6 +28,7 @@ export class LoginFormComponent {
   }
 
   login = () => {
+    console.log('submit');
     let userName = this.name.value?.toString();
     let userEmail = this.email.value?.toString();
     if (userName && userEmail) {

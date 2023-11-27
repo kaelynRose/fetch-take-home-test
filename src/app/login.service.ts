@@ -10,13 +10,13 @@ export class LoginService {
 
   constructor(private router: Router, private http: HttpClient) { }
 
-  userLogin = (userName: string, userEmail: string) => {
+  userLogin = async (userName: string, userEmail: string) => {
     let body = {
       name : userName,
       email : userEmail
     };
     try {
-      lastValueFrom(this.http.post('https://frontend-take-home-service.fetch.com/auth/login', body,{withCredentials: true}));
+      await this.http.post('https://frontend-take-home-service.fetch.com/auth/login', body,{withCredentials: true});
       this.router.navigate(['home']);
     } catch (error) {
       console.error(error);
