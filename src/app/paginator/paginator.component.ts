@@ -19,7 +19,11 @@ export class PaginatorComponent {
       this.dogService.prevDogPage();
     } else {
       this.dogService.searchSize = e.pageSize;
-      this.dogService.getAllDogs();
+      if (this.dogService.inFavorites) {
+        this.dogService.getFavoriteDogs();
+      } else {
+        this.dogService.getAllDogs();
+      }
     }
     window.scrollTo(0,0);
   }
