@@ -8,13 +8,11 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./paginator.component.css']
 })
 export class PaginatorComponent {
-
-  pageIndex: number = 0;
   
   constructor(public dogService: DogService) {}
 
   handlePageEvent = (e: PageEvent) => {
-    this.pageIndex = e.pageIndex;
+    this.dogService.pageIndex = e.pageIndex;
     if (e.previousPageIndex === undefined || e.pageIndex > e.previousPageIndex) {
       this.dogService.nextDogPage();
     } else if (e.previousPageIndex > e.pageIndex) {
@@ -24,6 +22,5 @@ export class PaginatorComponent {
       this.dogService.getAllDogs();
     }
     window.scrollTo(0,0);
-    console.log(this.pageIndex);
   }
 }

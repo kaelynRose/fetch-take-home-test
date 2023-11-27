@@ -37,6 +37,7 @@ export class DogService {
   searchSize: number = 25;
   httpParams: HttpParams = new HttpParams();
   inFavorites: boolean = false;
+  pageIndex: number = 0;
 
   constructor(private http:HttpClient, private router: Router) { }
   
@@ -49,6 +50,7 @@ export class DogService {
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?size=${this.searchSize}&sort=${this.sortString}`, {withCredentials: true}));
       this.inFavorites = false;
+      this.pageIndex = 0;
       this.getDogs();
     } catch (error) {
       console.error(error);
@@ -56,20 +58,28 @@ export class DogService {
   }
 
   nextDogPage = async () => {
-    try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com${this.searchResult.next}&size=${this.searchSize}`, {withCredentials: true}));
-      this.getDogs();
-    } catch (error) {
-      console.error(error);
+    if (this.inFavorites) {
+      this.getNextFavoriteDogs();
+    } else {
+      try {
+        this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com${this.searchResult.next}&size=${this.searchSize}`, {withCredentials: true}));
+        this.getDogs();
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
   prevDogPage = async () => {
-    try {
-      this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com${this.searchResult.prev}&size=${this.searchSize}`, {withCredentials: true}));
-      this.getDogs();
-    } catch (error) {
-      console.error(error);
+    if (this.inFavorites) {
+      this.getPrevFavoriteDogs();
+    } else {
+      try {
+        this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com${this.searchResult.prev}&size=${this.searchSize}`, {withCredentials: true}));
+        this.getDogs();
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
@@ -129,9 +139,31 @@ export class DogService {
 
   getFavoriteDogs = () => {
     this.inFavorites = true;
-    this.searchResult.resultIds = this.favoriteDogs;
+    this.searchResult.resultIds = [];
+    for (let x = 0; x < this.searchSize && x < this.favoriteDogs.length; x++) {
+      this.searchResult.resultIds.push(this.favoriteDogs[x]);
+    }
     this.searchResult.total = this.favoriteDogs.length;
+    this.searchResult.next = this.searchSize.toString();
+    this.searchResult.prev = '';
+    this.pageIndex = 0;
     this.getDogs();
+  }
+
+  getNextFavoriteDogs = () => {
+    if (this.searchResult.next != undefined) {
+      this.searchResult.resultIds = [];
+      let startIndex = parseInt(this.searchResult.next);
+      for (startIndex; startIndex < this.searchSize + startIndex && startIndex < this.favoriteDogs.length; startIndex++) {
+        this.searchResult.resultIds.push(this.favoriteDogs[startIndex]);
+      }
+      console.log(startIndex);
+      
+    }
+  }
+
+  getPrevFavoriteDogs = () => {
+
   }
 
   matchDog = async () => {
