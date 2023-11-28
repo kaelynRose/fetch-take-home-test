@@ -1,1 +1,5 @@
-<p>location-filter works!</p>
+<mat-form-field appearance="outline" class="mb-3">
+    <mat-label>Zip Code</mat-label>
+    <input type="text" matInput [formControl]="zipCode">
+    <mat-error *ngIf="zipCode.invalid">{{ getZipCodeErrorMessage() }}</mat-error>
+</mat-form-field>
