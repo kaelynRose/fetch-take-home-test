@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { LocationService } from '../location.service';
 
 @Component({
   selector: 'app-location-filter',
@@ -10,10 +11,9 @@ export class LocationFilterComponent {
   
   zipCode = new FormControl('', Validators.pattern('^[0-9]{5}$'));
 
-  constructor() {}
+  constructor(public locationService: LocationService) {}
 
   getZipCodeErrorMessage = () => {
-    console.error(this.zipCode.errors)
     return 'Zip Code must be 5 digits long';
   }
 }

@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline" class="mb-3">
     <mat-label>Zip Code</mat-label>
-    <input type="text" matInput [formControl]="zipCode">
+    <input type="text" matInput [formControl]="zipCode" placeholder="12345" [(ngModel)]="this.locationService.currentZipCode">
     <mat-error *ngIf="zipCode.invalid">{{ getZipCodeErrorMessage() }}</mat-error>
 </mat-form-field>

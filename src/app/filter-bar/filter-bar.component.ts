@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
 import { FormControl, Validators } from '@angular/forms';
+import { LocationService } from '../location.service';
 
 interface BreedCheckbox {
   name: string;
@@ -24,7 +25,7 @@ export class FilterBarComponent implements OnInit{
   ageMin = new FormControl('', [Validators.min(0), Validators.max(30)]);
   ageMax = new FormControl('', [Validators.min(0), Validators.max(30)]);
 
-  constructor(public dogService: DogService) { }
+  constructor(public dogService: DogService, public locationService: LocationService) { }
 
   ngOnInit(): void {
     this.loadDogBreeds();
