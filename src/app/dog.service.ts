@@ -49,6 +49,7 @@ export class DogService {
   }
 
   getAllDogs = async () => {
+    this.clearFilters();
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?size=${this.searchSize}&sort=${this.sortString}`, {withCredentials: true}));
       this.showFilters = true;
@@ -85,6 +86,13 @@ export class DogService {
     }
   }
 
+  clearFilters = () => {
+    this.locationService.zipArray = [];
+    this.locationService.currentZipCode = '';
+    this.locationService.distanceValue = 25;
+    this.filters = {zipCodes: this.locationService.zipArray};
+  }
+
   setFilters = async () => {
     if (this.filters.breeds?.length != undefined && this.filters.breeds?.length > 0) {
       this.httpParams = this.httpParams.set('breeds', '');
@@ -110,7 +118,6 @@ export class DogService {
         for (let zip of this.locationService.zipArray) {
           this.httpParams = this.httpParams.append('zipCodes', zip);
         }
-        console.log("Zip param: " + this.filters.zipCodes);
       }
     } catch (error) {
       console.error(error);

@@ -72,7 +72,6 @@ export class FilterBarComponent implements OnInit{
     this.breedList = this.breedList.map(x => ({name: x.name, checked: false}));
     this.ageMin.setValue('');
     this.ageMax.setValue('');
-    this.dogService.setFilters();
     this.dogService.getAllDogs();
   }
 }
