@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Dog } from './dog';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { LocationService } from './location.service';
 
 interface SearchResult {
   resultIds: string[];
@@ -33,14 +34,14 @@ export class DogService {
   favoriteDogs: string[] = [];
   matchedDog: Dog = new Dog();
   sortString: string = 'breed:asc';
-  filters: SearchParameters = {};
+  filters: SearchParameters = {zipCodes: this.locationService.zipArray};
   searchSize: number = 25;
   httpParams: HttpParams = new HttpParams();
   inFavorites: boolean = false;
   showFilters: boolean = true;
   pageIndex: number = 0;
 
-  constructor(private http:HttpClient, private router: Router) { }
+  constructor(private http:HttpClient, private router: Router, public locationService: LocationService) { }
   
   getDogBreeds = () => {
     const promise = lastValueFrom(this.http.get<string[]>('https://frontend-take-home-service.fetch.com/dogs/breeds', {withCredentials: true}));
@@ -84,18 +85,11 @@ export class DogService {
     }
   }
 
-  setFilters = () => {
+  setFilters = async () => {
     if (this.filters.breeds?.length != undefined && this.filters.breeds?.length > 0) {
       this.httpParams = this.httpParams.set('breeds', '');
       for (let breed of this.filters.breeds) {
         this.httpParams = this.httpParams.append('breeds', breed);
-      }
-    }
-
-    if (this.filters.zipCodes?.length != undefined && this.filters.zipCodes?.length > 0) {
-      this.httpParams = this.httpParams.set('zipCodes', '');
-      for (let zip of this.filters.zipCodes) {
-        this.httpParams = this.httpParams.append('zipCodes', zip);
       }
     }
 
@@ -108,10 +102,24 @@ export class DogService {
       this.httpParams = this.httpParams.delete('ageMax');
       this.httpParams = this.httpParams.set('ageMax', this.filters.ageMax.toString());
     }
+
+    try {
+      await this.locationService.searchLocationsForZips();
+      if (this.locationService.zipArray.length != undefined && this.locationService.zipArray.length > 0) {
+        this.httpParams = this.httpParams.set('zipCodes', '');
+        for (let zip of this.locationService.zipArray) {
+          this.httpParams = this.httpParams.append('zipCodes', zip);
+        }
+        console.log("Zip param: " + this.filters.zipCodes);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   getDogIds = async () => {
     try {
+      await this.setFilters();
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?sort=${this.sortString}&size=${this.searchSize}`, {params: this.httpParams, withCredentials: true}));
       this.getDogs();
     } catch (error) {

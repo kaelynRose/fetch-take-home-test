@@ -8,13 +8,6 @@ interface BreedCheckbox {
   checked: boolean;
 }
 
-interface Filters {
-  breeds?: string[];
-  zipCodes?: string[];
-  ageMin?: number;
-  ageMax?: number;
-}
-
 @Component({
   selector: 'app-filter-bar',
   templateUrl: './filter-bar.component.html',
@@ -58,7 +51,6 @@ export class FilterBarComponent implements OnInit{
   }
 
   filterDogs = () => {
-    this.locationService.getBoundsFromZip();
     let breedsFilter: string[] = this.breedList.filter(x => x.checked).map(x => x.name);
     let ageMaxValue: string | null = this.ageMax.value;
     let ageMinValue: string | null = this.ageMin.value;
@@ -69,11 +61,10 @@ export class FilterBarComponent implements OnInit{
       this.dogService.filters.ageMin = parseInt(ageMinValue);
     }
     this.dogService.filters.breeds = breedsFilter;
-    if (Object.keys(this.dogService.filters).length === 0) {
-      this.dogService.getAllDogs();
-    } else {
-      this.dogService.setFilters();
+    if (Object.keys(this.dogService.filters).length > 0 && this.locationService.currentZipCode != "") {
       this.dogService.getDogIds();
+    } else {
+      this.dogService.getAllDogs();
     }
   }
 

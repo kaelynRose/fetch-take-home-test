@@ -6,3 +6,13 @@ export interface Location {
     state: string;
     county: string;
 }
+
+export interface Coordinates {
+    lat: number;
+    lon: number;
+}
+
+export interface GeoBoundingBox {
+    bottom_left?: Coordinates;
+    top_right?: Coordinates;
+}
