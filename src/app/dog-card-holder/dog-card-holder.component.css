@@ -4,3 +4,4 @@
 .col-auto {
     min-width: 0;
 }
+#filterBtn {width: fit-content;}
