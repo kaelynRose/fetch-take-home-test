@@ -29,6 +29,7 @@ export class DogCardHolderComponent implements OnInit {
   constructor(public dogService: DogService, public offCanvasService: NgbOffcanvas) {}
 
   ngOnInit() {
+    this.dogService.checkConnection();
     this.dogService.getAllDogs();
   }
 

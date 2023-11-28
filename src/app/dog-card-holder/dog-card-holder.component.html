@@ -1,6 +1,6 @@
-<div class="row justify-content-end mb-3" *ngIf="!this.dogService.inFavorites">
-    <button class="col-1 col-sm-6" mat-button color="primary" (click)="showFiltersMenu()">Filters</button>
-    <div class="col-lg-3 col-md-6 col-sm-6">
+<div class="row justify-content-end mb-3" *ngIf="!this.dogService.inFavorites && this.dogService.searchResult.resultIds.length > 0">
+    <button class="col-12 col-sm-6 col-md-3" mat-button color="primary" (click)="showFiltersMenu()">Filters</button>
+    <div class="col-12 col-sm-6 col-md-3 text-center">
         <label id="sortSelectorLabel">
             Sort By
             <select id="sortSelector" [formControl]="sortSelect" (change)="sortDogs($event)">
@@ -20,7 +20,7 @@
         <app-dog-card [dog]="dog"></app-dog-card>
     </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="this.dogService.searchResult.resultIds.length > 0">
     <div class="col-12">
         <app-paginator></app-paginator>
     </div>

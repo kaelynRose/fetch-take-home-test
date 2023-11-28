@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 
 @Component({
@@ -14,7 +13,7 @@ export class LoginFormComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   showComponent: boolean = true;
 
-  constructor (private _router: Router, public loginService: LoginService) {}
+  constructor (public loginService: LoginService) {}
 
   getNameErrorMessage = () => {
     return 'You must enter a value';
@@ -22,16 +21,14 @@ export class LoginFormComponent {
 
   getEmailErrorMessage = () => {
     if (this.email.hasError('required')) {
-      return 'You must enter a value';
+      return 'You must enter a valid email';
     }
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
   login = () => {
-    let userName = this.name.value?.toString();
-    let userEmail = this.email.value?.toString();
-    if (userName && userEmail) {
-      this.loginService.userLogin(userName, userEmail);
+    if (this.name.valid && this.email.valid) {
+      this.loginService.userLogin(this.name.value!.toString(), this.email.value!.toString());
     }
   }
 }
