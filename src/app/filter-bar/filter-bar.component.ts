@@ -58,6 +58,7 @@ export class FilterBarComponent implements OnInit{
   }
 
   filterDogs = () => {
+    this.locationService.getCoordsFromZipCode();
     let breedsFilter: string[] = this.breedList.filter(x => x.checked).map(x => x.name);
     let ageMaxValue: string | null = this.ageMax.value;
     let ageMinValue: string | null = this.ageMin.value;

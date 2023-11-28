@@ -126,7 +126,7 @@ export class DogService {
       response = await lastValueFrom(this.http.post<Dog[]>('https://frontend-take-home-service.fetch.com/dogs', body, {withCredentials: true}));
       this.dogList = response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
