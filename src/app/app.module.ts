@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 import { MatchComponent } from './match/match.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { LocationFilterComponent } from './location-filter/location-filter.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { LocationFilterComponent } from './location-filter/location-filter.compo
     MatGridListModule,
     MatCheckboxModule,
     FormsModule,
+    MatSliderModule,
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full'},
       { path: 'login', component: LoginFormComponent },

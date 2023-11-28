@@ -1,0 +1,2 @@
+label {color: var(--mat-card-subtitle-text-color);}
+label:nth-of-type(2) {padding-left: 1rem;}
