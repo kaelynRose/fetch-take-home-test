@@ -38,7 +38,6 @@ export class DogService {
   searchSize: number = 25;
   httpParams: HttpParams = new HttpParams();
   inFavorites: boolean = false;
-  showFilters: boolean = true;
   pageIndex: number = 0;
 
   constructor(private http:HttpClient, private router: Router, public locationService: LocationService) { }
@@ -52,7 +51,6 @@ export class DogService {
     this.clearFilters();
     try {
       this.searchResult = await lastValueFrom(this.http.get<SearchResult>(`https://frontend-take-home-service.fetch.com/dogs/search?size=${this.searchSize}&sort=${this.sortString}`, {withCredentials: true}));
-      this.showFilters = true;
       this.pageIndex = 0;
       this.getDogs();
     } catch (error) {
@@ -84,6 +82,10 @@ export class DogService {
         console.error(error);
       }
     }
+  }
+
+  showFilters = () => {
+    
   }
 
   clearFilters = () => {
@@ -155,7 +157,6 @@ export class DogService {
 
   getFavoriteDogs = () => {
     this.inFavorites = true;
-    this.showFilters = false;
     this.searchResult.resultIds = [];
     for (let x = 0; x < this.searchSize && x < this.favoriteDogs.length; x++) {
       this.searchResult.resultIds.push(this.favoriteDogs[x]);

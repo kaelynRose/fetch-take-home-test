@@ -4,8 +4,8 @@
     <mat-error *ngIf="zipCode.invalid">{{ getZipCodeErrorMessage() }}</mat-error>
 </mat-form-field>
 <div class="mb-3" *ngIf='this.locationService.currentZipCode != ""'>
-    <label class="mat-subtitle-2">Distance</label>
-    <label class="mat-subtitle-2">{{ slider.value }} miles</label>
+    <label class="mat-subtitle-1">Distance</label>
+    <label class="mat-subtitle-1">{{ slider.value }} miles</label>
     <mat-slider min="0" max="50" step="5" showTickMarks [displayWith]="distanceLabel" style="width:90%;">
         <input matSliderThumb #slider [(ngModel)]="this.locationService.distanceValue">
     </mat-slider>

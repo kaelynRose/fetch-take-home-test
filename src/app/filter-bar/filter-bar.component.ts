@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
 import { FormControl, Validators } from '@angular/forms';
 import { LocationService } from '../location.service';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 interface BreedCheckbox {
   name: string;
@@ -18,7 +19,7 @@ export class FilterBarComponent implements OnInit{
   ageMin = new FormControl('', [Validators.min(0), Validators.max(30)]);
   ageMax = new FormControl('', [Validators.min(0), Validators.max(30)]);
 
-  constructor(public dogService: DogService, public locationService: LocationService) { }
+  constructor(public dogService: DogService, public locationService: LocationService, public offcanvas: NgbActiveOffcanvas) { }
 
   ngOnInit(): void {
     this.loadDogBreeds();

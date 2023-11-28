@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
 import { FormControl, Validators } from '@angular/forms';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { FilterBarComponent } from '../filter-bar/filter-bar.component';
 
 interface SortOptions {
   text: string;
@@ -24,7 +26,7 @@ export class DogCardHolderComponent implements OnInit {
 
   sortSelect = new FormControl(this.sortOptions[0].apiString, Validators.required);
 
-  constructor(public dogService: DogService) {}
+  constructor(public dogService: DogService, public offCanvasService: NgbOffcanvas) {}
 
   ngOnInit() {
     this.dogService.getAllDogs();
@@ -41,6 +43,6 @@ export class DogCardHolderComponent implements OnInit {
   }
 
   showFiltersMenu = () => {
-    this.dogService.showFilters = !this.dogService.showFilters;
+    this.offCanvasService.open(FilterBarComponent);
   }
 }
