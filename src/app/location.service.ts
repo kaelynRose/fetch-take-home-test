@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class LocationService {
   currentZipCode: string = "";
+  distanceValue: number = 25;
 
   constructor() { }
 }

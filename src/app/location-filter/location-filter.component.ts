@@ -10,7 +10,6 @@ import { LocationService } from '../location.service';
 export class LocationFilterComponent {
   
   zipCode = new FormControl('', Validators.pattern('^[0-9]{5}$'));
-  distanceValue = 25;
 
   distanceLabel = (value: number): string  => {
     return `${value}`;

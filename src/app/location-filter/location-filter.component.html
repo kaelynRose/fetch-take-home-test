@@ -7,6 +7,6 @@
     <label class="mat-subtitle-2">Distance</label>
     <label class="mat-subtitle-2">{{ slider.value }} miles</label>
     <mat-slider min="0" max="50" step="5" showTickMarks discrete [displayWith]="distanceLabel" style="width:90%;">
-        <input matSliderThumb #slider [(ngModel)]="distanceValue">
+        <input matSliderThumb #slider [(ngModel)]="this.locationService.distanceValue">
     </mat-slider>
 </div>
