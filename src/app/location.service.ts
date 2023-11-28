@@ -20,6 +20,7 @@ interface GeoBoundingBox {
 export class LocationService {
   currentZipCode: string = "";
   zipCoords: Coordinates = {lat: 0, lon: 0};
+  geoBox: GeoBoundingBox = {bottom_left: {lat: 0, lon: 0}, top_right: {lat:0, lon:0}};
   distanceValue: number = 25;
 
   constructor(private http:HttpClient) { }
@@ -31,6 +32,21 @@ export class LocationService {
       response = await lastValueFrom(this.http.post<Location[]>('https://frontend-take-home-service.fetch.com/locations', body, {withCredentials: true}));
       this.zipCoords = {lat: response[0].latitude, lon: response[0].longitude};
       console.log(this.zipCoords)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  getBoundsFromZip = async () => {
+    try {
+      await this.getCoordsFromZipCode();
+      let coordsArray: Coordinates[] = getBoundsOfDistance(this.zipCoords, this.distanceValue).map(x => ({
+        lat: x.latitude,
+        lon: x.longitude
+      }));
+      this.geoBox.bottom_left = coordsArray[0];
+      this.geoBox.top_right = coordsArray[1];
+      console.log(this.geoBox);
     } catch (error) {
       console.error(error);
     }
