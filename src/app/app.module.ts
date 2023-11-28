@@ -26,6 +26,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatchComponent } from './match/match.component';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { LocationFilterComponent } from './location-filter/location-filter.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { PaginatorComponent } from './paginator/paginator.component';
     HomeComponent,
     DogCardHolderComponent,
     MatchComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    LocationFilterComponent
   ],
   imports: [
     BrowserModule,
