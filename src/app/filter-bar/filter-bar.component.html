@@ -25,6 +25,10 @@
                 <mat-error *ngIf="ageMax.invalid">{{ getAgeMaxErrorMessage() }}</mat-error>
             </mat-form-field>
         </div>
+        <mat-card-subtitle class="mb-2">Location</mat-card-subtitle>
+        <div id="locationContainer" class="mb-3">
+            <app-location-filter></app-location-filter>
+        </div>
     </mat-card-content>
     <mat-card-actions>
         <button mat-flat-button color="primary" (click)="filterDogs()">Filter</button>
