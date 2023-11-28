@@ -1,5 +1,5 @@
 #filterCard {
-    max-width: 300px;
+    max-width: min-content;
     max-height: 90vh;
 }
 #breedContainer {

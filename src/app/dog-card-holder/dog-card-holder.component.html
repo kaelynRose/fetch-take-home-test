@@ -15,7 +15,7 @@
 <div class="row" *ngIf="this.dogService.dogList.length == 0 && !this.dogService.inFavorites">
     <div class="alert alert-warning text-center">We couldn't find any dogs. Try again later.</div>
 </div>
-<div class="row justify-content-between">
+<div class="row align-content-around">
     <div class="col-auto" *ngFor="let dog of dogService.dogList">
         <app-dog-card [dog]="dog"></app-dog-card>
     </div>
