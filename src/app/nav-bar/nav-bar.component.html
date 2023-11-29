@@ -1,15 +1,14 @@
-<mat-toolbar class="sticky-top navbar navbar-dark navbar-expand-lg" color="primary">
-    <div class="container container-fluid">
-        <button mat-button (click)="this.dogService.getAllDogs(); this.dogService.inFavorites = false;" class="navbar-brand">Fetch A Dog</button>
-        <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-controls="navbarNav" aria-expanded="isMenuCollapsed" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+<nav class="sticky-top navbar navbar-light navbar-expand-lg mb-3">
+    <div class="container-fluid">
+        <button mat-flat-button color="primary" (click)="this.dogService.getAllDogs(); this.dogService.inFavorites = false;" class="navbar-brand">Fetch A Dog</button>
+        <button mat-fab color="primary" class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" aria-controls="navbarNav" aria-expanded="isMenuCollapsed" aria-label="Toggle navigation"><mat-icon>menu</mat-icon></button>
 
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav">
-                <button class="nav-item" mat-button (click)="isMenuCollapsed = true" *ngIf="!isMenuCollapsed">Filters</button>
-                <button class="nav-item" mat-button (click)="isMenuCollapsed = true; this.dogService.getFavoriteDogs()">My Favorite Dogs</button>
-                <button class="nav-item" mat-flat-button color="accent" *ngIf="this.dogService.favoriteDogs.length > 0" (click)="this.findMatch()">Fetch My Match!</button>
-                <button class="nav-item" mat-button (click)="isMenuCollapsed = true; this.loginService.userLogout()">Logout</button>
+                <button class="nav-item" mat-flat-button color="primary" (click)="isMenuCollapsed = true; this.dogService.getFavoriteDogs()">My Favorite Dogs</button>
+                <button class="nav-item" mat-flat-button color="accent" *ngIf="this.dogService.favoriteDogs.length > 0" (click)="isMenuCollapsed = true; this.findMatch()">Fetch My Match!</button>
+                <button class="nav-item" mat-flat-button color="primary" (click)="isMenuCollapsed = true; this.loginService.userLogout()">Logout</button>
             </div>
         </div>
     </div>
-</mat-toolbar>
+</nav>

@@ -1,3 +1,4 @@
-mat-toolbar {
-    margin-bottom: 2rem;
+.navbar {
+    background-color: #673AB7;
+    color: white;
 }

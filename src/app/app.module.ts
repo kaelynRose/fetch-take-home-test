@@ -28,6 +28,7 @@ import { MatchComponent } from './match/match.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { LocationFilterComponent } from './location-filter/location-filter.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MatSliderModule } from '@angular/material/slider';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    MatIconModule,
     MatCardModule,
     MatFormFieldModule,
     MatPaginatorModule,
