@@ -52,7 +52,8 @@ export class FilterBarComponent implements OnInit{
   }
 
   filterDogs = () => {
-    let breedsFilter: string[] = this.breedList.filter(x => x.checked).map(x => x.name);
+    this.dogService.clearFilters();
+    this.dogService.filters.breeds = this.breedList.filter(x => x.checked).map(x => x.name);
     let ageMaxValue: string | null = this.ageMax.value;
     let ageMinValue: string | null = this.ageMin.value;
     if (ageMaxValue != null) {
@@ -61,9 +62,8 @@ export class FilterBarComponent implements OnInit{
     if (ageMinValue != null) {
       this.dogService.filters.ageMin = parseInt(ageMinValue);
     }
-    this.dogService.filters.breeds = breedsFilter;
-    if (Object.keys(this.dogService.filters).length > 0 && this.locationService.currentZipCode != "") {
-      this.dogService.getDogIds();
+    if (Object.keys(this.dogService.filters).length > 0) {
+      this.dogService.setFilters();
     } else {
       this.dogService.getAllDogs();
     }
@@ -73,6 +73,10 @@ export class FilterBarComponent implements OnInit{
     this.breedList = this.breedList.map(x => ({name: x.name, checked: false}));
     this.ageMin.setValue('');
     this.ageMax.setValue('');
+    this.locationService.currentZipCode = "";
+    this.locationService.zipArray = [];
+    this.locationService.distanceValue = 25;
+    this.dogService.clearFilters();
     this.dogService.getAllDogs();
   }
 }
