@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title: string = 'Fetch Take Home Test';
-  loggedIn: boolean = false;
-
+  title: string = 'Fetch A Dog';
 }
