@@ -113,7 +113,6 @@ export class DogService {
       if (this.locationService.currentZipCode != "") {
         await this.locationService.searchLocationsForZips();
         if (this.locationService.zipArray.length != undefined && this.locationService.zipArray.length > 0) {
-          console.log(this.locationService.zipArray);
           this.httpParams = this.httpParams.delete('zipCodes');
           this.httpParams = this.httpParams.set('zipCodes', '');
           for (let zip of this.locationService.zipArray) {

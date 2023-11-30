@@ -36,7 +36,7 @@ export class LocationService {
 
   getBoundsFromZip = async () => {
     let distanceMeters: number = this.distanceValue * 1609.34;
-    console.log(distanceMeters);
+    if (distanceMeters === 0) { distanceMeters = 1; }
     try {
       await this.getCoordsFromZipCode();
       let coordsArray: Coordinates[] = getBoundsOfDistance({longitude: this.zipCoords.lon, latitude: this.zipCoords.lat}, distanceMeters).map(x => ({
