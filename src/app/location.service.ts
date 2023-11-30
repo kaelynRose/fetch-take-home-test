@@ -18,7 +18,6 @@ export class LocationService {
   zipCoords: Coordinates = {lat: 0, lon: 0};
   geoBox: GeoBoundingBox = {};
   distanceValue: number = 25;
-  distanceMeters: number = this.distanceValue * 1609.34;
   zipArray: string[] = [];
   locationSearchResult: LocationSearchResult = {results: [], total: 0};
 
@@ -36,9 +35,11 @@ export class LocationService {
   }
 
   getBoundsFromZip = async () => {
+    let distanceMeters: number = this.distanceValue * 1609.34;
+    console.log(distanceMeters);
     try {
       await this.getCoordsFromZipCode();
-      let coordsArray: Coordinates[] = getBoundsOfDistance({longitude: this.zipCoords.lon, latitude: this.zipCoords.lat}, this.distanceMeters).map(x => ({
+      let coordsArray: Coordinates[] = getBoundsOfDistance({longitude: this.zipCoords.lon, latitude: this.zipCoords.lat}, distanceMeters).map(x => ({
         lat: x.latitude,
         lon: x.longitude
       }));
@@ -53,7 +54,10 @@ export class LocationService {
     let body;
     try {
       await this.getBoundsFromZip();
-      body = {geoBoundingBox: this.geoBox};
+      body = {
+        geoBoundingBox: this.geoBox,
+        size: 100
+      };
       this.locationSearchResult = await lastValueFrom(this.http.post<LocationSearchResult>('https://frontend-take-home-service.fetch.com/locations/search', body, {withCredentials: true}));
       this.zipArray = this.locationSearchResult.results.map(x => x.zip_code);
     } catch (error) {

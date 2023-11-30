@@ -34,7 +34,7 @@ export class DogService {
   favoriteDogs: string[] = [];
   matchedDog: Dog = new Dog();
   sortString: string = 'breed:asc';
-  filters: SearchParameters = {zipCodes: this.locationService.zipArray};
+  filters: SearchParameters = {};
   searchSize: number = 25;
   httpParams: HttpParams = new HttpParams();
   inFavorites: boolean = false;
@@ -88,7 +88,6 @@ export class DogService {
     this.httpParams = this.httpParams.delete('ageMax');
     this.httpParams = this.httpParams.delete('breeds');
     this.httpParams = this.httpParams.delete('zipCodes');
-    this.filters = {zipCodes: this.locationService.zipArray};
   }
 
   setFilters = async () => {
@@ -114,6 +113,7 @@ export class DogService {
       if (this.locationService.currentZipCode != "") {
         await this.locationService.searchLocationsForZips();
         if (this.locationService.zipArray.length != undefined && this.locationService.zipArray.length > 0) {
+          console.log(this.locationService.zipArray);
           this.httpParams = this.httpParams.delete('zipCodes');
           this.httpParams = this.httpParams.set('zipCodes', '');
           for (let zip of this.locationService.zipArray) {
