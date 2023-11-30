@@ -29,13 +29,13 @@ export class DogCardHolderComponent implements OnInit {
   constructor(public dogService: DogService, public offCanvasService: NgbOffcanvas) {}
 
   ngOnInit() {
-    this.dogService.checkConnection();
     this.dogService.getAllDogs();
   }
 
   sortDogs = (e: any) => {
     try {
       this.dogService.sortString = e.target.value;
+      this.dogService.pageIndex = 0;
       this.dogService.getDogIds();
     } catch (error) {
       console.error(error);

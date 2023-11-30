@@ -41,19 +41,6 @@ export class DogService {
   pageIndex: number = 0;
 
   constructor(private http:HttpClient, private router: Router, public locationService: LocationService) { }
-
-  checkConnection = async () => {
-    try {
-      
-    } catch (error) {
-      if (error instanceof HttpErrorResponse) {
-        if (error.status !>= 200) {
-          this.router.navigate(['login']);
-        }
-        console.error(error);
-      }
-    }
-  }
   
   getDogBreeds = () => {
     const promise = lastValueFrom(this.http.get<string[]>('https://frontend-take-home-service.fetch.com/dogs/breeds', {withCredentials: true}));
