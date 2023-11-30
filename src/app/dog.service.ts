@@ -88,6 +88,7 @@ export class DogService {
     this.httpParams = this.httpParams.delete('ageMax');
     this.httpParams = this.httpParams.delete('breeds');
     this.httpParams = this.httpParams.delete('zipCodes');
+    this.pageIndex = 0;
   }
 
   setFilters = async () => {
